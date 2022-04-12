@@ -1,7 +1,6 @@
- Os sis 
+ Lesson#1
+
+ Os sis
  uname_result(system='Windows', node='DESKTOP-AO6GE7P', release='10', version='10.0.19044', machine='AMD64'),
-
-
-
  Python 3.9.5 (tags/v3.9.5:0a7dcbd, May  3 2021, 17:27:52) [MSC v.1928 64 bit (AMD64)],
  ('64bit', 'WindowsPE')

@@ -1,4 +1,6 @@
 import os
+#homework #1
+
 
 import platform
 import sys
