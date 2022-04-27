@@ -9,8 +9,6 @@ import simple_draw as sd
 # Код функций из упр lesson_004/02_global_color.py скопировать сюда
 # Результат решения см lesson_004/results/exercise_03_shape_select.jpg
 
-# TODO здесь ваш код
-
 
 x = input(
     "1 - труегольник\n2 - квадрат\n3 - пятиугольник\n4 - шестиугольник\n\nВведите свой номер: ")
@@ -46,27 +44,18 @@ def hexagon():
     figure(65, 25, 7)
 
 
-if int(x) == 1:
-    triangle()
-elif int(x) == 2:
-    square()
-elif int(x) == 3:
-    pentagon()
-elif int(x) == 4:
-    hexagon()
-else:
-    print("Не правильный ввод, введите цифры от 1 до 4")
+figures = {1: triangle,
+           2: square,
+           3: pentagon,
+           4: hexagon
+           }
 
-# if x.isdigit():
-#     if 1 <= int(x) <= 4:
-#         triangle()
-#         # square()
-#         # pentagon()
-#         # hexagon()
-#         sd.pause()
-#     else:
-#         print('Вы ввели неправильное значение. Повторите попытку!')
-# else:
-#     print('Вы ввели неправильное значение. Повторите попытку!')
+for key, value in figures.items():
+    if key == int(x):
+        t = value
+        t()
+        break
+else:
+    print("Не правильный ввод, повторите!!!")
 
 sd.pause()
