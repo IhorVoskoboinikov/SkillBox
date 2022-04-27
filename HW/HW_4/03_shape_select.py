@@ -50,11 +50,8 @@ figures = {1: triangle,
            4: hexagon
            }
 
-for key, value in figures.items():
-    if key == int(x):
-        t = value
-        t()
-        break
+if int(x) in figures:
+    figures[int(x)]()
 else:
     print("Не правильный ввод, повторите!!!")
 
