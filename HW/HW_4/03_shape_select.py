@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 import simple_draw as sd
 
@@ -8,7 +7,6 @@ import simple_draw as sd
 
 # Код функций из упр lesson_004/02_global_color.py скопировать сюда
 # Результат решения см lesson_004/results/exercise_03_shape_select.jpg
-
 
 x = input(
     "1 - труегольник\n2 - квадрат\n3 - пятиугольник\n4 - шестиугольник\n\nВведите свой номер: ")
