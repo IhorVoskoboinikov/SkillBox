@@ -1,4 +1,3 @@
-
 import simple_draw as sd
 
 # Запросить у пользователя желаемую фигуру посредством выбора из существующих
@@ -41,16 +40,41 @@ def hexagon():
     figure(65, 25, 7)
 
 
-figures = {1: triangle,
-           2: square,
-           3: pentagon,
-           4: hexagon
-           }
+# решение со словарем==========Вариант №1==========================
+# figures = {1: triangle,
+#            2: square,
+#            3: pentagon,
+#            4: hexagon
+#            }
 
-if int(x) in figures:
-    figures[int(x)]()
+
+# figures.get(int(x), figures[2])()
+
+# решение со словарем==========Вариант №2==========================
+# if int(x) in figures:
+#     figures[int(x)]()
+# else:
+#     figures[2]()
+#     print("Не правильный ввод!!! У вас бонус - квадрат!")
+# решение со списком==========Вариант №3==========================
+
+figures = [
+    [1, triangle],
+    [2, square],
+    [3, pentagon],
+    [4, hexagon]]
+
+for i in figures:
+    x = int(x)
+    if i[0] == x:
+        print(i)
+        figures[x-1][1]()
+        break
 else:
-    figures[2]()
-    print("Не правильный ввод!!! У вас бонус - квадрат!")
+    print("Не правильный ввод, ваш приз - квадрат!!!")
+    figures[1][1]()
+
+
+
 
 sd.pause()
