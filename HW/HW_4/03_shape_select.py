@@ -68,13 +68,10 @@ for i in figures:
     x = int(x)
     if i[0] == x:
         print(i)
-        figures[x-1][1]()
+        figures[x - 1][1]()
         break
 else:
     print("Не правильный ввод, ваш приз - квадрат!!!")
     figures[1][1]()
-
-
-
 
 sd.pause()
