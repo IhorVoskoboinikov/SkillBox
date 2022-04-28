@@ -46,7 +46,7 @@ def hexagon():
 #            3: pentagon,
 #            4: hexagon
 #            }
-
+#
 
 # figures.get(int(x), figures[2])()
 
@@ -59,19 +59,15 @@ def hexagon():
 # решение со списком==========Вариант №3==========================
 
 figures = [
-    [1, triangle],
-    [2, square],
-    [3, pentagon],
-    [4, hexagon]]
-
-for i in figures:
-    x = int(x)
-    if i[0] == x:
-        print(i)
-        figures[x - 1][1]()
-        break
-else:
-    print("Не правильный ввод, ваш приз - квадрат!!!")
-    figures[1][1]()
+    triangle,
+    square,
+    pentagon,
+    hexagon
+]
+x = int(x) - 1
+ind = 1
+if x < len(figures):
+    ind = x
+figures[ind]()
 
 sd.pause()
