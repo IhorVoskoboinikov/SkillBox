@@ -29,7 +29,6 @@ sd.resolution = (1200, 800)
 
 # можно поиграть -шрифтами- цветами и углами отклонения
 
-# TODO здесь ваш код
 def draw_bunches(point, angle, length):
     v_0 = sd.get_vector(start_point=point, angle=angle, length=length)
     v_0.draw()
