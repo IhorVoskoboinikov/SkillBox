@@ -50,6 +50,7 @@ figures = {1: triangle,
 if int(x) in figures:
     figures[int(x)]()
 else:
-    print("Не правильный ввод, повторите!!!")
+    figures[2]()
+    print("Не правильный ввод!!! У вас бонус - квадрат!")
 
 sd.pause()
