@@ -1,4 +1,7 @@
 import simple_draw as sd
+from random import seed, randint
+
+seed(0)
 
 sd.resolution = (1200, 800)
 
@@ -7,16 +10,36 @@ sd.resolution = (1200, 800)
 # - нарисовать падение этих N снежинок
 # - создать список рандомных длинн лучей снежинок (от 10 до 100) и пусть все снежинки будут разные
 
+
+snowflakes_coordinates = []
+snowflakes_sizes = []
+snowflakes_speed = []
 N = 20
-snowflakes_coordinates = [
-    [700, 100],
-    [750, 150],
-    [800, 200],
-    [650, 50],
-    [700, 300]
-]
-snowflakes_sizes = [10, 20, 30, 40, 50]
-snowflakes_speed = [5, 7, 10, 12, 15]
+max_y = 800
+min_y = 700
+min_x = 50
+max_x = 300
+min_size = 10
+max_size = 50
+min_speed = 5
+max_speed = 15
+
+
+def create_snowflake():
+    y = randint(min_y, max_y)
+    x = randint(min_x, max_x)
+    s = randint(min_size, max_size)
+    sp = randint(min_speed, max_speed)
+
+    return [y, x], s, sp
+
+
+for i in range(N):
+    param = create_snowflake()
+    snowflakes_coordinates.append(param[0])
+    snowflakes_sizes.append(param[1])
+    snowflakes_speed.append(param[2])
+
 # Пригодятся функции
 # sd.get_point()
 # sd.snowflake()
@@ -24,27 +47,17 @@ snowflakes_speed = [5, 7, 10, 12, 15]
 # sd.random_number()
 # sd.user_want_exit()
 
-# TODO здесь ваш код
-# y = snowflakes[0][0]
-# x = snowflakes[0][1]
-#
-# y1 = snowflakes[1][0]
-# x1 = snowflakes[1][1]
-#
-# y2 = snowflakes[2][0]
-# x2 = snowflakes[2][1]
 
 while True:
     sd.clear_screen()
-
     for point, length, speed in zip(snowflakes_coordinates, snowflakes_sizes, snowflakes_speed):
-            next_point = sd.get_point(point[1], point[0])
-            sd.snowflake(center=next_point, length=length)
-            point[0] -= 10
-            point[1] += speed
+        next_point = sd.get_point(point[1], point[0])
+        sd.snowflake(center=next_point, length=length)
+        point[0] -= 10
+        point[1] += speed
 
-            if point[0] < 50:
-                break
+        if point[0] < 50:
+            break
 
     sd.sleep(0.1)
     if sd.user_want_exit():
