@@ -35,10 +35,10 @@ def create_snowflake():
 
 
 for i in range(N):
-    param = create_snowflake()
-    snowflakes_coordinates.append(param[0])
-    snowflakes_sizes.append(param[1])
-    snowflakes_speed.append(param[2])
+    coordinates, length, speed = create_snowflake()
+    snowflakes_coordinates.append(coordinates)
+    snowflakes_sizes.append(length)
+    snowflakes_speed.append(speed)
 
 # Пригодятся функции
 # sd.get_point()
@@ -50,14 +50,22 @@ for i in range(N):
 
 while True:
     sd.clear_screen()
-    for point, length, speed in zip(snowflakes_coordinates, snowflakes_sizes, snowflakes_speed):
+
+    for i in range(N):
+        point = snowflakes_coordinates[i]
+        length = snowflakes_sizes[i]
+        speed = snowflakes_speed[i]
+
         next_point = sd.get_point(point[1], point[0])
         sd.snowflake(center=next_point, length=length)
-        point[0] -= 10
+        point[0] -= speed
         point[1] += speed
 
         if point[0] < 50:
-            break
+            new_point, new_length, new_speed = create_snowflake()
+            snowflakes_coordinates[i] = new_point
+            snowflakes_sizes[i] = length
+            snowflakes_speed[i] = speed
 
     sd.sleep(0.1)
     if sd.user_want_exit():
