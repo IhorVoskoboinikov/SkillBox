@@ -8,15 +8,15 @@ sd.resolution = (1200, 800)
 # - создать список рандомных длинн лучей снежинок (от 10 до 100) и пусть все снежинки будут разные
 
 N = 20
-snowflakes = [
-    [700, 100, 10],
-    [750, 150, 20],
-    [800, 200, 30],
-    [650, 50, 40],
-    [700, 300, 50]
+snowflakes_coordinates = [
+    [700, 100],
+    [750, 150],
+    [800, 200],
+    [650, 50],
+    [700, 300]
 ]
-
-
+snowflakes_sizes = [10, 20, 30, 40, 50]
+snowflakes_speed = [5, 7, 10, 12, 15]
 # Пригодятся функции
 # sd.get_point()
 # sd.snowflake()
@@ -37,14 +37,14 @@ snowflakes = [
 while True:
     sd.clear_screen()
 
-    for point in snowflakes:
+    for point, length, speed in zip(snowflakes_coordinates, snowflakes_sizes, snowflakes_speed):
             next_point = sd.get_point(point[1], point[0])
-            sd.snowflake(center=next_point, length=point[2])
+            sd.snowflake(center=next_point, length=length)
             point[0] -= 10
-            point[1] += 10
+            point[1] += speed
 
-    if point[0] < 50:
-        break
+            if point[0] < 50:
+                break
 
     sd.sleep(0.1)
     if sd.user_want_exit():
