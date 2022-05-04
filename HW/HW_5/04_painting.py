@@ -18,7 +18,26 @@
 # пример см. lesson_005/results/04_painting.jpg
 # Приправить своей фантазией по вкусу (коты? коровы? люди? трактор? что придумается)
 
-# TODO здесь ваш код
+
+import simple_draw as sd
+
+sd.resolution = (1200, 800)
+
+from drawings.rainbow import draw_rainbow
+from drawings.wood import draw_wood
+from drawings.sun import draw_sun
+from drawings.smile import draw_smile
+
+draw_rainbow()
+draw_smile()
+draw_sun()
+point_0 = sd.get_point(600, 50)
+draw_wood(point=point_0, angle=90, length=100)
+sd.pause()
+
+# sd.resolution = (1200, 800)
+
+# sd.pause()
 
 # Усложненное задание (делать по желанию)
 # Анимировать картину.
