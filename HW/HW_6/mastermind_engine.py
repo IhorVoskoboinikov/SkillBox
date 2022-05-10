@@ -10,7 +10,7 @@ def think_of_a_number():  # загадать число
     _guess_number = {}
     for i in range(0, MAX_NUMBER_SIZE):
         _guess_number[i] = randint(1, 9)
-    return _guess_number.values()
+    return list(_guess_number.values())
 
 
 def check_number(player_response):  # проверить число
