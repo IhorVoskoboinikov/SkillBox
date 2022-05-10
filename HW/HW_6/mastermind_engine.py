@@ -11,20 +11,22 @@ def think_of_a_number():  # загадать число
 
 
 def check_number(player_response):  # проверить число
-    bulls_cows = {}
-    count_bulls = 0
-    count_cows = 0
-    for i, digit in enumerate(_guess_number):
-        if str(digit) == player_response[i]:
-            count_bulls += 1
-            bulls_cows['bulls'] = count_bulls
-            # print(i + 1, "Нашли быка")
-        elif player_response.count(str(digit)):
-            count_cows += 1
-            bulls_cows['cows'] = count_cows
-            # print(i + 1, "Нашли корову")
+    bulls_cows = {'bulls': 0, 'cows': 0}
+    player_response_set = set(_guess_number)
+    for player_digit, digit in zip(player_response, _guess_number):
+        if str(digit) == player_digit:
+            bulls_cows['bulls'] += 1
+        elif digit in player_response_set:
+            bulls_cows['cows'] += 1
 
     return bulls_cows
+
+
+def validate_number(player_response):
+    if len(player_response) == 4:
+        return True
+    else:
+        return False
 
 # if __name__ == "__main__":
 #     print(len(player_input))

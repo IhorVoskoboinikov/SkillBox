@@ -44,7 +44,7 @@
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
 
-from mastermind_engine import think_of_a_number, check_number, _guess_number
+from mastermind_engine import think_of_a_number, check_number, _guess_number, validate_number
 from termcolor import cprint, colored
 
 think_of_a_number()
@@ -54,6 +54,8 @@ counts = 0
 while True:
     cprint(f"Загаданное число:{_guess_number}", color='red')
     player_input = input(colored("Введите четырех значное число:", color='green'))
+    if validate_number(player_response=player_input) == False:
+        raise ValueError("Не правильный ввод, нужно ввести 4 цифры!!!")
     counts += 1
     test_response = check_number(player_response=player_input)
     cprint(test_response, color='red')
