@@ -2,30 +2,27 @@ from random import randint
 
 MAX_NUMBER_SIZE = 4
 
-_guess_number = {}  # угадываемое число
+_guess_number = []  # угадываемое число
 
 
 def think_of_a_number():  # загадать число
-    global _guess_number
-    _guess_number = {}
     for i in range(0, MAX_NUMBER_SIZE):
-        _guess_number[i] = randint(1, 9)
-    return list(_guess_number.values())
+        _guess_number.append(randint(1, 9))
 
 
 def check_number(player_response):  # проверить число
     bulls_cows = {}
     count_bulls = 0
     count_cows = 0
-    for key, value in _guess_number.items():
-        if str(value) == player_response[key]:
+    for i, digit in enumerate(_guess_number):
+        if str(digit) == player_response[i]:
             count_bulls += 1
             bulls_cows['bulls'] = count_bulls
-            # print(key + 1, "Нашли быка")
-        elif player_response.count(str(value)):
+            # print(i + 1, "Нашли быка")
+        elif player_response.count(str(digit)):
             count_cows += 1
             bulls_cows['cows'] = count_cows
-            # print(key + 1, "Нашли корову")
+            # print(i + 1, "Нашли корову")
 
     return bulls_cows
 

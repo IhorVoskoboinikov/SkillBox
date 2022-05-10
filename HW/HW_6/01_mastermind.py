@@ -44,10 +44,10 @@
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
 
-from mastermind_engine import think_of_a_number, check_number
+from mastermind_engine import think_of_a_number, check_number, _guess_number
 from termcolor import cprint, colored
 
-_guess_number = think_of_a_number()
+think_of_a_number()
 
 counts = 0
 
