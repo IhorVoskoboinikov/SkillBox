@@ -47,19 +47,28 @@
 from mastermind_engine import think_of_a_number, check_number, _guess_number, validate_number
 from termcolor import cprint, colored
 
-think_of_a_number()
-
-counts = 0
-
 while True:
-    cprint(f"Загаданное число:{_guess_number}", color='red')
-    player_input = input(colored("Введите четырех значное число:", color='green'))
-    if validate_number(player_response=player_input) == False:
-        raise ValueError("Не правильный ввод, нужно ввести 4 цифры!!!")
-    counts += 1
-    test_response = check_number(player_response=player_input)
-    cprint(test_response, color='red')
-    if test_response['bulls'] == 4:
-        break
+    think_of_a_number()
+    counts = 0
+    while True:
+        cprint(f"Загаданное число:{_guess_number}", color='red')
+        player_input = input(colored("Введите четырех значное число:", color='green'))
+        if not validate_number(player_response=player_input):
+            print("Не правильный ввод! Попробуйте еще раз!")
+            continue
+        counts += 1
+        test_response = check_number(player_response=player_input)
+        cprint(test_response, color='red')
+        if test_response['bulls'] == 4:
+            break
 
-cprint(f"Вы угадави всех быков за {counts} попытки!\nХотите сыграть еще раз?", color='yellow')
+    cprint(f"Вы угадави всех быков за {counts} попытки!\nХотите сыграть еще раз?", color='yellow')
+    restart_app = input("Введите Yes - Да хочу!\nNo - Не хочу!\nВаш ответ:")
+    restart_lower = restart_app.lower()
+    if restart_lower == "yes":
+        counts = 0
+        _guess_number.clear()
+        continue
+    else:
+        print("Игра окончена!")
+        break

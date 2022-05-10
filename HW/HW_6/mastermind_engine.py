@@ -6,13 +6,14 @@ _guess_number = []  # угадываемое число
 
 
 def think_of_a_number():  # загадать число
-    for i in range(0, MAX_NUMBER_SIZE):
-        _guess_number.append(randint(1, 9))
+    _guess_number.append(randint(1, 9))
+    for i in range(1, MAX_NUMBER_SIZE):
+        _guess_number.append(randint(0, 9))
 
 
 def check_number(player_response):  # проверить число
     bulls_cows = {'bulls': 0, 'cows': 0}
-    player_response_set = set(_guess_number)
+    player_response_set = set(player_response)
     for player_digit, digit in zip(player_response, _guess_number):
         if str(digit) == player_digit:
             bulls_cows['bulls'] += 1
@@ -23,10 +24,7 @@ def check_number(player_response):  # проверить число
 
 
 def validate_number(player_response):
-    if len(player_response) == 4:
-        return True
-    else:
-        return False
+    return len(player_response) == 4
 
 # if __name__ == "__main__":
 #     print(len(player_input))
