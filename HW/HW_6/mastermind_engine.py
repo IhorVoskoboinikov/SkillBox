@@ -31,6 +31,6 @@ def check_number(player_response):  # проверить число
 
 # if __name__ == "__main__":
 #     print(len(player_input))
-    # think_of_a_number()
-    # print(_guess_number.values())
-    # print(check_number(player_response=player_input))
+# think_of_a_number()
+# print(_guess_number.values())
+# print(check_number(player_response=player_input))
