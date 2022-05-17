@@ -19,8 +19,63 @@
 #   print(Water(), '+', Air(), '=', Water() + Air())
 #   print(Fire(), '+', Air(), '=', Fire() + Air())
 
-# TODO здесь ваш код
+class Water:
+
+    def __init__(self):
+        self.name = 'Вода'
+
+    def __str__(self):
+        return self.name
+
+    def __add__(self, other):
+        return self.name
+
+
+class Air:
+
+    def __init__(self):
+        self.name = 'Воздух'
+
+    def __str__(self):
+        return self.name
+
+    def __add__(self, other):
+        return self.name
+
+
+class Fire:
+
+    def __init__(self):
+        self.name = 'Огонь'
+
+    def __str__(self):
+        return self.name
+
+
+class Earth:
+
+    def __init__(self):
+        self.name = 'Земля'
+
+    def __str__(self):
+        return self.name
+
+
+class Storm:
+
+    def __init__(self):
+        self.name = 'Шторм'
+
+    def __str__(self):
+        return self.name
+
+    # def __add__(self, other):
+    #     new_element = Storm()
+
+
+print(Water(), '+', Air(), '=', Storm())
+print(Water(), '+', Air(), '=', Water() + Air())
 
 # Усложненное задание (делать по желанию)
 # Добавить еще элемент в игру.
-# Придумать что будет при сложении существующих элементов с новым.
+# Придумать что будет при сложении существующих элементов с новы
