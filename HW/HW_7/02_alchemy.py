@@ -19,6 +19,7 @@
 #   print(Water(), '+', Air(), '=', Water() + Air())
 #   print(Fire(), '+', Air(), '=', Fire() + Air())
 
+
 class Water:
 
     def __init__(self):
@@ -28,12 +29,11 @@ class Water:
         return self.name
 
     def __add__(self, other):
-        if isinstance(other, Air):
-            return Storm()
-        elif isinstance(other, Fire):
-            return Steam()
-        elif isinstance(other, Earth):
-            return Dirt()
+        elements = GLOBAL_ELEMENTS['self.name']
+        if other.name in elements.keys():
+            return elements[other.name]()
+        else:
+            return UnknownElement()
 
 
 class Air:
@@ -127,13 +127,29 @@ class Lava:
         return self.name
 
 
+class UnknownElement:
+    def __init__(self):
+        self.name = 'Не известный элемент!'
+
+    def __str__(self):
+        return self.name
+
+GLOBAL_ELEMENTS = {
+            'self.name': {
+                'Воздух': Storm,
+                'Огонь': Steam,
+                'Земля': Dirt,
+            }
+}
+
 print(Water(), '+', Air(), '=', Water() + Air())
 print(Water(), '+', Fire(), '=', Water() + Fire())
 print(Water(), '+', Earth(), '=', Water() + Earth())
-print(Air(), '+', Fire(), '=', Air() + Fire())
-print(Air(), '+', Earth(), '=', Air() + Earth())
-print(Fire(), '+', Earth(), '=', Fire() + Earth())
+# print(Air(), '+', Fire(), '=', Air() + Fire())
+# print(Air(), '+', Earth(), '=', Air() + Earth())
+# print(Fire(), '+', Earth(), '=', Fire() + Earth())
 
 # Усложненное задание (делать по желанию)
 # Добавить еще элемент в игру.
 # Придумать что будет при сложении существующих элементов с новы
+
