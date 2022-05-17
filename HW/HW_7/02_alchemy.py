@@ -28,7 +28,12 @@ class Water:
         return self.name
 
     def __add__(self, other):
-        return self.name
+        if isinstance(other, Air):
+            return Storm()
+        elif isinstance(other, Fire):
+            return Steam()
+        elif isinstance(other, Earth):
+            return Dirt()
 
 
 class Air:
@@ -40,7 +45,10 @@ class Air:
         return self.name
 
     def __add__(self, other):
-        return self.name
+        if isinstance(other, Fire):
+            return Lightning()
+        elif isinstance(other, Earth):
+            return Dust()
 
 
 class Fire:
@@ -50,6 +58,10 @@ class Fire:
 
     def __str__(self):
         return self.name
+
+    def __add__(self, other):
+        if isinstance(other, Earth):
+            return Lava()
 
 
 class Earth:
@@ -69,12 +81,58 @@ class Storm:
     def __str__(self):
         return self.name
 
-    # def __add__(self, other):
-    #     new_element = Storm()
+
+class Steam:
+
+    def __init__(self):
+        self.name = 'Пар'
+
+    def __str__(self):
+        return self.name
 
 
-print(Water(), '+', Air(), '=', Storm())
+class Dirt:
+
+    def __init__(self):
+        self.name = 'Грязь'
+
+    def __str__(self):
+        return self.name
+
+
+class Lightning:
+
+    def __init__(self):
+        self.name = 'Молния'
+
+    def __str__(self):
+        return self.name
+
+
+class Dust:
+
+    def __init__(self):
+        self.name = 'Пыль'
+
+    def __str__(self):
+        return self.name
+
+
+class Lava:
+
+    def __init__(self):
+        self.name = 'Лава'
+
+    def __str__(self):
+        return self.name
+
+
 print(Water(), '+', Air(), '=', Water() + Air())
+print(Water(), '+', Fire(), '=', Water() + Fire())
+print(Water(), '+', Earth(), '=', Water() + Earth())
+print(Air(), '+', Fire(), '=', Air() + Fire())
+print(Air(), '+', Earth(), '=', Air() + Earth())
+print(Fire(), '+', Earth(), '=', Fire() + Earth())
 
 # Усложненное задание (делать по желанию)
 # Добавить еще элемент в игру.
