@@ -190,11 +190,11 @@ my_favorite_house = OurHouse()
 for citizen in citizens:
     citizen.move_into_the_house(house=my_favorite_house)
 
-for day in range(1, 365):
-    print(f"---------------День № {day} - утро")
+for day in range(1, 366):
+    print(f"-----------День № {day} - утро----------")
     for citisen in citizens:
         citisen.live()
-    print('--- в конце дня ---')
+    print('------------ в конце дня --------------')
     for citisen in citizens:
         print(citisen)
     print(my_favorite_house)
