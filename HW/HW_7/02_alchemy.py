@@ -29,11 +29,8 @@ class Water:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS[self.name]
-        if other.name in elements.keys():
-            return elements[other.name]()
-        else:
-            return UnknownElement()
+        return GLOBAL_ELEMENTS[self.name].get(other.name, UnknownElement())
+
 
 
 class Air:
@@ -45,11 +42,7 @@ class Air:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS[other.name]
-        if self.name in elements.keys():
-            return elements[self.name]()
-        else:
-            return UnknownElement()
+        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
 
 
 class Fire:
@@ -61,11 +54,7 @@ class Fire:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS[other.name]
-        if self.name in elements.keys():
-            return elements[self.name]()
-        else:
-            return UnknownElement()
+        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
 
 
 class Earth:
@@ -77,11 +66,7 @@ class Earth:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS[other.name]
-        if self.name in elements.keys():
-            return elements[self.name]()
-        else:
-            return UnknownElement()
+        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
 
 
 class Storm:
@@ -93,11 +78,7 @@ class Storm:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS[self.name]
-        if other.name in elements.keys():
-            return elements[other.name]()
-        else:
-            return UnknownElement()
+        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
 
 
 class Steam:
@@ -109,11 +90,7 @@ class Steam:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS[self.name]
-        if other.name in elements.keys():
-            return elements[other.name]()
-        else:
-            return UnknownElement()
+        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
 
 
 class Dirt:
@@ -125,11 +102,7 @@ class Dirt:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS[self.name]
-        if other.name in elements.keys():
-            return elements[other.name]()
-        else:
-            return UnknownElement()
+        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
 
 
 class Lightning:
@@ -141,11 +114,7 @@ class Lightning:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS[self.name]
-        if other.name in elements.keys():
-            return elements[other.name]()
-        else:
-            return UnknownElement()
+        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
 
 
 class Dust:
@@ -157,11 +126,7 @@ class Dust:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS[self.name]
-        if other.name in elements.keys():
-            return elements[other.name]()
-        else:
-            return UnknownElement()
+        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
 
 
 class Lava:
@@ -183,22 +148,22 @@ class UnknownElement:
 
 GLOBAL_ELEMENTS = {
     "Вода": {
-        "Воздух": Storm,
-        "Огонь": Steam,
-        "Земля": Dirt,
+        "Воздух": Storm(),
+        "Огонь": Steam(),
+        "Земля": Dirt(),
     },
     "Воздух": {
-        "Огонь": Lightning,
-        "Земля": Dust,
+        "Огонь": Lightning(),
+        "Земля": Dust(),
     },
     "Огонь": {
-        "Земля": Lava,
-        "Воздух": Lightning,
+        "Земля": Lava(),
+        "Воздух": Lightning(),
 
     },
 }
 
-print(Water(), '+', Air(), '=', Air() + Water())
+print(Water(), '+', Air(), '=', Water() + Air())
 print(Water(), '+', Fire(), '=', Fire() + Water())
 print(Water(), '+', Earth(), '=', Water() + Earth())
 print(Air(), '+', Fire(), '=', Air() + Fire())
