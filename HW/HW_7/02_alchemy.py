@@ -29,7 +29,7 @@ class Water:
         return self.name
 
     def __add__(self, other):
-        elements = GLOBAL_ELEMENTS['self.name']
+        elements = GLOBAL_ELEMENTS[self.name]
         if other.name in elements.keys():
             return elements[other.name]()
         else:
@@ -45,10 +45,11 @@ class Air:
         return self.name
 
     def __add__(self, other):
-        if isinstance(other, Fire):
-            return Lightning()
-        elif isinstance(other, Earth):
-            return Dust()
+        elements = GLOBAL_ELEMENTS[other.name]
+        if self.name in elements.keys():
+            return elements[self.name]()
+        else:
+            return UnknownElement()
 
 
 class Fire:
@@ -60,8 +61,11 @@ class Fire:
         return self.name
 
     def __add__(self, other):
-        if isinstance(other, Earth):
-            return Lava()
+        elements = GLOBAL_ELEMENTS[other.name]
+        if self.name in elements.keys():
+            return elements[self.name]()
+        else:
+            return UnknownElement()
 
 
 class Earth:
@@ -72,6 +76,13 @@ class Earth:
     def __str__(self):
         return self.name
 
+    def __add__(self, other):
+        elements = GLOBAL_ELEMENTS[other.name]
+        if self.name in elements.keys():
+            return elements[self.name]()
+        else:
+            return UnknownElement()
+
 
 class Storm:
 
@@ -80,6 +91,13 @@ class Storm:
 
     def __str__(self):
         return self.name
+
+    def __add__(self, other):
+        elements = GLOBAL_ELEMENTS[self.name]
+        if other.name in elements.keys():
+            return elements[other.name]()
+        else:
+            return UnknownElement()
 
 
 class Steam:
@@ -90,6 +108,13 @@ class Steam:
     def __str__(self):
         return self.name
 
+    def __add__(self, other):
+        elements = GLOBAL_ELEMENTS[self.name]
+        if other.name in elements.keys():
+            return elements[other.name]()
+        else:
+            return UnknownElement()
+
 
 class Dirt:
 
@@ -98,6 +123,13 @@ class Dirt:
 
     def __str__(self):
         return self.name
+
+    def __add__(self, other):
+        elements = GLOBAL_ELEMENTS[self.name]
+        if other.name in elements.keys():
+            return elements[other.name]()
+        else:
+            return UnknownElement()
 
 
 class Lightning:
@@ -108,6 +140,13 @@ class Lightning:
     def __str__(self):
         return self.name
 
+    def __add__(self, other):
+        elements = GLOBAL_ELEMENTS[self.name]
+        if other.name in elements.keys():
+            return elements[other.name]()
+        else:
+            return UnknownElement()
+
 
 class Dust:
 
@@ -116,6 +155,13 @@ class Dust:
 
     def __str__(self):
         return self.name
+
+    def __add__(self, other):
+        elements = GLOBAL_ELEMENTS[self.name]
+        if other.name in elements.keys():
+            return elements[other.name]()
+        else:
+            return UnknownElement()
 
 
 class Lava:
@@ -134,22 +180,31 @@ class UnknownElement:
     def __str__(self):
         return self.name
 
+
 GLOBAL_ELEMENTS = {
-            'self.name': {
-                'Воздух': Storm,
-                'Огонь': Steam,
-                'Земля': Dirt,
-            }
+    "Вода": {
+        "Воздух": Storm,
+        "Огонь": Steam,
+        "Земля": Dirt,
+    },
+    "Воздух": {
+        "Огонь": Lightning,
+        "Земля": Dust,
+    },
+    "Огонь": {
+        "Земля": Lava,
+        "Воздух": Lightning,
+
+    },
 }
 
-print(Water(), '+', Air(), '=', Water() + Air())
-print(Water(), '+', Fire(), '=', Water() + Fire())
+print(Water(), '+', Air(), '=', Air() + Water())
+print(Water(), '+', Fire(), '=', Fire() + Water())
 print(Water(), '+', Earth(), '=', Water() + Earth())
-# print(Air(), '+', Fire(), '=', Air() + Fire())
-# print(Air(), '+', Earth(), '=', Air() + Earth())
-# print(Fire(), '+', Earth(), '=', Fire() + Earth())
+print(Air(), '+', Fire(), '=', Air() + Fire())
+print(Air(), '+', Earth(), '=', Earth() + Air())
+print(Fire(), '+', Earth(), '=', Earth() + Fire())
 
 # Усложненное задание (делать по желанию)
 # Добавить еще элемент в игру.
 # Придумать что будет при сложении существующих элементов с новы
-
