@@ -29,8 +29,12 @@ class Water:
         return self.name
 
     def __add__(self, other):
-        return GLOBAL_ELEMENTS[self.name].get(other.name, UnknownElement())
-
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 class Air:
@@ -42,7 +46,12 @@ class Air:
         return self.name
 
     def __add__(self, other):
-        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 class Fire:
@@ -54,7 +63,12 @@ class Fire:
         return self.name
 
     def __add__(self, other):
-        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 class Earth:
@@ -66,7 +80,12 @@ class Earth:
         return self.name
 
     def __add__(self, other):
-        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 class Storm:
@@ -78,7 +97,12 @@ class Storm:
         return self.name
 
     def __add__(self, other):
-        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 class Steam:
@@ -90,7 +114,12 @@ class Steam:
         return self.name
 
     def __add__(self, other):
-        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 class Dirt:
@@ -102,7 +131,12 @@ class Dirt:
         return self.name
 
     def __add__(self, other):
-        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 class Lightning:
@@ -114,7 +148,12 @@ class Lightning:
         return self.name
 
     def __add__(self, other):
-        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 class Dust:
@@ -126,7 +165,12 @@ class Dust:
         return self.name
 
     def __add__(self, other):
-        return GLOBAL_ELEMENTS[other.name].get(self.name, UnknownElement())
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 class Lava:
@@ -137,6 +181,14 @@ class Lava:
     def __str__(self):
         return self.name
 
+    def __add__(self, other):
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
+
 
 class UnknownElement:
     def __init__(self):
@@ -144,6 +196,14 @@ class UnknownElement:
 
     def __str__(self):
         return self.name
+
+    def __add__(self, other):
+        if self.name in GLOBAL_ELEMENTS:
+            elements = GLOBAL_ELEMENTS[self.name]
+            return elements.get(other.name, UnknownElement())
+        else:
+            elements = GLOBAL_ELEMENTS[other.name]
+            return elements.get(self.name, UnknownElement())
 
 
 GLOBAL_ELEMENTS = {
@@ -159,6 +219,7 @@ GLOBAL_ELEMENTS = {
     "Огонь": {
         "Земля": Lava(),
         "Воздух": Lightning(),
+        "Вода": Steam(),
 
     },
 }
