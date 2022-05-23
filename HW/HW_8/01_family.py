@@ -48,6 +48,9 @@ class Human:
         self.satiety = 30  # сытость
         self.happiness = 100  # уровень счастья
 
+    def __str__(self):
+        return f'{self.name}: сытость - {self.satiety}, уровень счастья {self.happiness}'
+
 
 class House:
 
@@ -64,8 +67,8 @@ class House:
 class Husband(Human, House):
 
     def __init__(self, name):
-        super().__init__(name=name)
-        self.name = name
+        Human.__init__(self, name=name)
+        House.__init__(self)
 
     def __str__(self):
         return super().__str__()
@@ -80,6 +83,7 @@ class Husband(Human, House):
 
     def eat(self):
         self.food_in_the_fridge -= 10
+        self.satiety += 10
         cprint(f'{self.name} вкусно поел!')
 
     def work(self):
@@ -96,8 +100,8 @@ class Husband(Human, House):
 class Wife(Human, House):
 
     def __init__(self, name):
-        super().__init__(name=name)
-        self.name = name
+        Human.__init__(self, name=name)
+        House.__init__(self)
 
     def __str__(self):
         return super().__str__()
@@ -111,6 +115,9 @@ class Wife(Human, House):
             self.buy_fur_coat()
         elif self.dirt_in_the_house >= 100:
             self.clean_house()
+        else:
+            self.satiety -= 10
+            print(f'{self.name} сижу нифига не делаю)))')
 
     def eat(self):
         self.food_in_the_fridge -= 10
