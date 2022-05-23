@@ -49,7 +49,7 @@ class Human:
         self.happiness = 100  # уровень счастья
 
     def __str__(self):
-        return f'{self.name}: сытость - {self.satiety}, уровень счастья {self.happiness}'
+        return f'{self.name}: сытость = {self.satiety}, уровень счастья = {self.happiness}'
 
 
 class House:
@@ -64,14 +64,16 @@ class House:
                f' чистота (грязь) = {self.dirt_in_the_house}'
 
 
-class Husband(Human, House):
+class Husband(Human):
 
-    def __init__(self, name):
-        Human.__init__(self, name=name)
-        House.__init__(self)
+    def __init__(self, name, house):
+        super().__init__(name=name)
+        self.house = house
 
     def __str__(self):
-        return super().__str__()
+        res = super().__str__()
+        return res + f' Осталось денег = {self.house.money_in_the_nightstand}, Осталось еды = {self.house.food_in_the_fridge}, ' \
+                     f'чистота = {self.house.dirt_in_the_house}'
 
     def act(self):
         if self.satiety == 0:
@@ -79,36 +81,38 @@ class Husband(Human, House):
             return
         if self.satiety <= 10:
             self.eat()
-        elif self.money_in_the_nightstand <= 10:
+        elif self.house.money_in_the_nightstand <= 10:
             self.work()
         else:
             self.gaming()
 
     def eat(self):
         food = randint(1, 30)
-        self.food_in_the_fridge -= food
+        self.house.food_in_the_fridge -= food
         self.satiety += food
         cprint(f'{self.name} вкусно поел! Всего съел = {food}')
 
     def work(self):
         self.satiety -= 10
-        self.money_in_the_nightstand += 150
+        self.house.money_in_the_nightstand += 150
         cprint(f'{self.name} сходил на работу!')
 
     def gaming(self):
         self.satiety -= 10
-        self.dirt_in_the_house += 20
+        self.house.dirt_in_the_house += 20
         cprint(f'{self.name} поиграл в Мир Танков по сети!')
 
 
-class Wife(Human, House):
+class Wife(Human):
 
-    def __init__(self, name):
-        Human.__init__(self, name=name)
-        House.__init__(self)
+    def __init__(self, name, house):
+        super().__init__(name=name)
+        self.house = house
 
     def __str__(self):
-        return super().__str__()
+        res = super().__str__()
+        return res + f' Осталось денег = {self.house.money_in_the_nightstand}, Осталось еды = {self.house.food_in_the_fridge}, ' \
+                     f'чистота = {self.house.dirt_in_the_house}'
 
     def act(self):
         if self.satiety == 0:
@@ -116,11 +120,11 @@ class Wife(Human, House):
             return
         if self.satiety <= 10:
             self.eat()
-        elif self.food_in_the_fridge <= 10:
+        elif self.house.food_in_the_fridge <= 10:
             self.shopping()
-        elif self.money_in_the_nightstand > 350:
+        elif self.house.money_in_the_nightstand > 350:
             self.buy_fur_coat()
-        elif self.dirt_in_the_house >= 100:
+        elif self.house.dirt_in_the_house >= 100:
             self.clean_house()
         else:
             self.satiety -= 10
@@ -128,31 +132,31 @@ class Wife(Human, House):
 
     def eat(self):
         food = randint(1, 30)
-        self.food_in_the_fridge -= food
+        self.house.food_in_the_fridge -= food
         self.satiety += food
         cprint(f'{self.name} вкусно поела! Всего съела = {food}')
 
     def shopping(self):
         amount_of_food = 10
-        self.money_in_the_nightstand -= amount_of_food
-        self.food_in_the_fridge += amount_of_food
+        self.house.money_in_the_nightstand -= amount_of_food
+        self.house.food_in_the_fridge += amount_of_food
         self.satiety -= 10
         cprint(f'{self.name} сходила в магазин за едой!Купила еды = {amount_of_food}')
 
     def buy_fur_coat(self):
         self.satiety -= 10
-        self.money_in_the_nightstand -= 350
+        self.house.money_in_the_nightstand -= 350
         cprint(f'{self.name} купила норковую шубу!')
 
     def clean_house(self):
-        self.dirt_in_the_house -= 50
+        self.house.dirt_in_the_house -= 50
         self.satiety -= 10
         cprint(f'{self.name} поубирала в доме!')
 
 
 home = House()
-ihor = Husband(name='Игорь')
-natasha = Wife(name='Наташа')
+ihor = Husband(name='Игорь', house=home)
+natasha = Wife(name='Наташа', house=home)
 
 for day in range(1, 21):
     cprint(f'================== День {day} ==================', color='red')
