@@ -74,20 +74,23 @@ class Husband(Human):
         return super().__str__()
 
     def act(self):
-        if self.satiety == 0:
+        if self.satiety <= 0:
             print(f'{self.name} - УМЕР!')
             return
-        if self.house.dirt_in_the_house > 90:
-            self.happiness -= 5
-        elif self.satiety <= 10:
+        if self.happiness <= 10:
+            print(f'{self.name} - УМЕР от депрессии!')
+            return
+        if self.house.dirt_in_the_house >= 80:
+            self.happiness -= 10
+        if self.satiety <= 10:
             self.eat()
-        elif self.house.money_in_the_nightstand <= 50:
-            self.work()
-        else:
+        elif self.happiness <= 20:
             self.gaming()
+        else:
+            self.work()
 
     def eat(self):
-        food = randint(1, 31)
+        food = randint(20, 31)
         self.house.food_in_the_fridge -= food
         self.satiety += food
         cprint(f'{self.name} вкусно поел! Всего съел = {food}')
@@ -99,6 +102,7 @@ class Husband(Human):
 
     def gaming(self):
         self.satiety -= 10
+        self.happiness += 20
         cprint(f'{self.name} поиграл в Мир Танков по сети!')
 
 
@@ -111,33 +115,14 @@ class Wife(Human):
     def __str__(self):
         return super().__str__()
 
-    def act(self):
-        self.house.dirt_in_the_house += 5
-        if self.satiety == 0:
-            print(f'{self.name} - УМЕРA!')
-            return
-        if self.house.dirt_in_the_house >= 100:
-            self.clean_house()
-        elif self.house.dirt_in_the_house > 90:
-            self.happiness -= 5
-        elif self.satiety <= 10:
-            self.eat()
-        elif self.house.food_in_the_fridge <= 30:
-            self.shopping()
-        elif self.house.money_in_the_nightstand > 350:
-            self.buy_fur_coat()
-        else:
-            self.satiety -= 10
-            print(f'{self.name} сижу нифига не делаю)))')
-
     def eat(self):
-        food = randint(1, 31)
+        food = randint(20, 31)
         self.house.food_in_the_fridge -= food
         self.satiety += food
         cprint(f'{self.name} вкусно поела! Всего съела = {food}')
 
     def shopping(self):
-        amount_of_food = self.house.food_in_the_fridge + (30*2)
+        amount_of_food = self.house.food_in_the_fridge + 60
         self.house.money_in_the_nightstand -= amount_of_food
         self.house.food_in_the_fridge += amount_of_food
         self.satiety -= 10
@@ -146,19 +131,43 @@ class Wife(Human):
     def buy_fur_coat(self):
         self.satiety -= 10
         self.house.money_in_the_nightstand -= 350
+        self.happiness += 60
         cprint(f'{self.name} купила норковую шубу!')
 
     def clean_house(self):
-        self.house.dirt_in_the_house -= 100
+        cleaning = randint(1, 101)
+        self.house.dirt_in_the_house -= cleaning
         self.satiety -= 10
         cprint(f'{self.name} поубирала в доме!')
+
+    def act(self):
+        self.house.dirt_in_the_house += 10
+        if self.satiety <= 0:
+            print(f'{self.name} - УМЕРЛA!')
+            return
+        if self.happiness <= 10:
+            print(f'{self.name} - УМЕРЛA от депрессии!')
+            return
+        if self.house.dirt_in_the_house >= 80:
+            self.happiness -= 10
+        if self.satiety <= 10:
+            self.eat()
+        elif self.happiness <= 20:
+            self.buy_fur_coat()
+        elif self.house.food_in_the_fridge <= 30:
+            self.shopping()
+        elif self.house.dirt_in_the_house >= 100:
+            self.clean_house()
+        else:
+            self.satiety -= 10
+            print(f'{self.name} сижу нифига не делаю)))')
 
 
 home = House()
 ihor = Husband(name='Игорь', house=home)
 natasha = Wife(name='Наташа', house=home)
 
-for day in range(1, 36):
+for day in range(1, 365):
     cprint(f'================== День {day} ==================', color='red')
     ihor.act()
     natasha.act()
