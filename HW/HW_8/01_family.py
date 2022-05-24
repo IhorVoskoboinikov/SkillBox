@@ -51,6 +51,10 @@ class Human:
     def __str__(self):
         return f'{self.name}: сытость = {self.satiety}, уровень счастья = {self.happiness}'
 
+    def pet_the_cat(self):
+        self.happiness += 5
+        print(f'{self.name} - погладил кота!')
+
 
 class House:
     total_food = 0
@@ -59,6 +63,7 @@ class House:
         self.money_in_the_nightstand = 100  # деньги в тумбочке
         self.food_in_the_fridge = 50  # еда в холодильнике
         self.dirt_in_the_house = 0  # грязь в доме
+        self.food_for_cat = 30
 
     def __str__(self):
         return f'В доме: деньги = {self.money_in_the_nightstand}, еда = {self.food_in_the_fridge},' \
@@ -145,7 +150,12 @@ class Wife(Human):
         cleaning = randint(50, 101)
         self.house.dirt_in_the_house -= cleaning
         self.satiety -= 10
-        cprint(f'{self.name} поубирала в доме!')
+        cprint(f'{self.name} поубирала в доме! на {cleaning} ед.')
+
+    def by_eat_for_cat(self):
+        self.house.food_for_cat += 10
+        self.house.money_in_the_nightstand -= 10
+        cprint(f'{self.name} купила еду коту!')
 
     def act(self):
         if self.satiety <= 0:
@@ -164,22 +174,68 @@ class Wife(Human):
             self.shopping()
         elif self.house.dirt_in_the_house >= 100:
             self.clean_house()
+        elif self.house.food_for_cat <= 10:
+            self.by_eat_for_cat()
         else:
             self.satiety -= 10
             print(f'{self.name} сижу нифига не делаю)))')
 
 
+class Cat:
+
+    def __init__(self, name, house):
+        self.name = name
+        self.house = house
+        self.satiety = 30
+
+    def __str__(self):
+        return f'Кот {self.name}: сытость = {self.satiety}'
+
+    def act(self):
+        if self.satiety <= 0:
+            print(f'{self.name} - УМЕР!')
+            return
+        choice = randint(1, 3)
+        if self.satiety <= 10:
+            self.eat()
+        elif choice == 1:
+            self.sleep()
+        else:
+            self.soil()
+
+
+
+
+    def eat(self):
+        amount_of_cat_food = randint(1, 11)
+        self.house.food_for_cat -= amount_of_cat_food
+        self.satiety += (amount_of_cat_food * 2)
+        print(f'{self.name} поел!')
+
+    def sleep(self):
+        self.satiety -= 10
+        print(f'{self.name} поспал!')
+
+    def soil(self):  # драть обои
+        self.satiety -= 10
+        self.house.dirt_in_the_house += 5
+        print(f'{self.name} подрал обои!')
+
+
 home = House()
 ihor = Husband(name='Игорь', house=home)
 natasha = Wife(name='Наташа', house=home)
+cat_timka = Cat(name='Тимка', house=home)
 
 for day in range(1, 365):
     cprint(f'================== День {day} ==================', color='red')
     home.dirt_in_the_house += 10
     ihor.act()
     natasha.act()
+    cat_timka.act()
     cprint(ihor, color='cyan')
     cprint(natasha, color='cyan')
+    cprint(cat_timka, color='cyan')
     cprint(home, color='green')
 
 cprint(f'Муж заработал всего денег - {Husband.total_money}', color='blue')
@@ -191,19 +247,19 @@ cprint(f'Всего сьели еды - {House.total_food}', color='blue')
 # После подтверждения учителем первой части надо
 # отщепить ветку develop и в ней начать добавлять котов в модель семьи
 #
-# Кот может:
-#   есть,
-#   спать,
-#   драть обои
+# Кот может:+++++
+#   есть,+++
+#   спать,+++
+#   драть обои+++
 #
-# Люди могут:
-#   гладить кота (растет степень счастья на 5 пунктов)
+# Люди могут:+++
+#   гладить кота (растет степень счастья на 5 пунктов)+++
 #
 # В доме добавляется:
-#   еда для кота (в начале - 30)
+#   еда для кота (в начале - 30)+++
 #
-# У кота есть имя и степень сытости (в начале - 30)
-# Любое действие кота, кроме "есть", приводит к уменьшению степени сытости на 10 пунктов
+# У кота есть имя и степень сытости (в начале - 30)+++
+# Любое действие кота, кроме "есть", приводит к уменьшению степени сытости на 10 пунктов+++
 # Еда для кота покупается за деньги: за 10 денег 10 еды.
 # Кушает кот максимум по 10 единиц еды, степень сытости растет на 2 пункта за 1 пункт еды.
 # Степень сытости не должна падать ниже 0, иначе кот умрет от голода.
