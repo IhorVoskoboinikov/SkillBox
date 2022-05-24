@@ -142,7 +142,7 @@ class Wife(Human):
         cprint(f'{self.name} купила норковую шубу!')
 
     def clean_house(self):
-        cleaning = randint(1, 101)
+        cleaning = randint(75, 101)
         self.house.dirt_in_the_house -= cleaning
         self.satiety -= 10
         cprint(f'{self.name} поубирала в доме!')
