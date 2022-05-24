@@ -128,7 +128,7 @@ class Wife(Human):
         cprint(f'{self.name} вкусно поела! Всего съела = {food}')
 
     def shopping(self):
-        amount_of_food = self.house.food_in_the_fridge + 60
+        amount_of_food = 60
         self.house.money_in_the_nightstand -= amount_of_food
         self.house.food_in_the_fridge += amount_of_food
         self.satiety -= 10
@@ -170,16 +170,49 @@ class Wife(Human):
             print(f'{self.name} сижу нифига не делаю)))')
 
 
+class Child(Human):
+
+    def __init__(self, name, house):
+        super().__init__(name=name)
+        self.house = house
+
+    def __str__(self):
+        return super().__str__()
+
+    def act(self):
+        if self.satiety <= 0:
+            print(f'{self.name} - УМЕР!')
+            return
+        if self.satiety <= 10:
+            self.eat()
+        else:
+            self.sleep()
+
+    def eat(self):
+        food = randint(1, 11)
+        self.house.food_in_the_fridge -= food
+        self.satiety += food
+        House.total_food += food
+        cprint(f'{self.name} вкусно поел! Всего съел = {food}')
+
+
+    def sleep(self):
+        self.satiety -= 10
+
+
 home = House()
 ihor = Husband(name='Игорь', house=home)
 natasha = Wife(name='Наташа', house=home)
+roma = Child(name='Рома', house=home)
 
 for day in range(1, 365):
     cprint(f'================== День {day} ==================', color='red')
     ihor.act()
     natasha.act()
+    roma.act()
     cprint(ihor, color='cyan')
     cprint(natasha, color='cyan')
+    cprint(roma, color='cyan')
     cprint(home, color='green')
 
 cprint(f'Муж заработал всего денег - {Husband.total_money}', color='blue')
