@@ -53,6 +53,7 @@ class Human:
 
 
 class House:
+    total_food = 0
 
     def __init__(self):
         self.money_in_the_nightstand = 100  # деньги в тумбочке
@@ -65,6 +66,7 @@ class House:
 
 
 class Husband(Human):
+    total_money = 0
 
     def __init__(self, name, house):
         super().__init__(name=name)
@@ -88,11 +90,13 @@ class Husband(Human):
             self.gaming()
         else:
             self.work()
+            Husband.total_money += 150
 
     def eat(self):
         food = randint(20, 31)
         self.house.food_in_the_fridge -= food
         self.satiety += food
+        House.total_food += food
         cprint(f'{self.name} вкусно поел! Всего съел = {food}')
 
     def work(self):
@@ -107,6 +111,7 @@ class Husband(Human):
 
 
 class Wife(Human):
+    total_fur_coats = 0
 
     def __init__(self, name, house):
         super().__init__(name=name)
@@ -119,6 +124,7 @@ class Wife(Human):
         food = randint(20, 31)
         self.house.food_in_the_fridge -= food
         self.satiety += food
+        House.total_food += food
         cprint(f'{self.name} вкусно поела! Всего съела = {food}')
 
     def shopping(self):
@@ -132,6 +138,7 @@ class Wife(Human):
         self.satiety -= 10
         self.house.money_in_the_nightstand -= 350
         self.happiness += 60
+        Wife.total_fur_coats += 1
         cprint(f'{self.name} купила норковую шубу!')
 
     def clean_house(self):
@@ -174,6 +181,10 @@ for day in range(1, 365):
     cprint(ihor, color='cyan')
     cprint(natasha, color='cyan')
     cprint(home, color='green')
+
+cprint(f'Муж заработал всего денег - {Husband.total_money}', color='blue')
+cprint(f'Жена купила всего шуб - {Wife.total_fur_coats}', color='blue')
+cprint(f'Всего сьели еды - {House.total_food}', color='blue')
 
 # TODO после реализации первой части - отдать на проверку учителю
 
