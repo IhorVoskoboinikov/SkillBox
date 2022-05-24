@@ -139,16 +139,15 @@ class Wife(Human):
         self.house.money_in_the_nightstand -= 350
         self.happiness += 60
         Wife.total_fur_coats += 1
-        cprint(f'{self.name} купила норковую шубу!')
+        cprint(f'{self.name} купила норковую шубу! за 350 грн')
 
     def clean_house(self):
-        cleaning = randint(1, 101)
+        cleaning = randint(50, 101)
         self.house.dirt_in_the_house -= cleaning
         self.satiety -= 10
         cprint(f'{self.name} поубирала в доме!')
 
     def act(self):
-        self.house.dirt_in_the_house += 10
         if self.satiety <= 0:
             print(f'{self.name} - УМЕРЛA!')
             return
@@ -176,6 +175,7 @@ natasha = Wife(name='Наташа', house=home)
 
 for day in range(1, 365):
     cprint(f'================== День {day} ==================', color='red')
+    home.dirt_in_the_house += 10
     ihor.act()
     natasha.act()
     cprint(ihor, color='cyan')
