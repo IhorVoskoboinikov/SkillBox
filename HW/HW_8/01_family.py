@@ -67,7 +67,7 @@ class House:
 
     def __str__(self):
         return f'В доме: деньги = {self.money_in_the_nightstand}, еда = {self.food_in_the_fridge},' \
-               f' чистота (грязь) = {self.dirt_in_the_house}'
+               f' чистота (грязь) = {self.dirt_in_the_house}, еда кота = {self.food_for_cat}'
 
 
 class Husband(Human):
@@ -82,10 +82,10 @@ class Husband(Human):
 
     def act(self):
         if self.satiety <= 0:
-            print(f'{self.name} - УМЕР!')
+            cprint(f'{self.name} - УМЕР!', color='red')
             return
         if self.happiness <= 10:
-            print(f'{self.name} - УМЕР от депрессии!')
+            cprint(f'{self.name} - УМЕР от депрессии!', color='red')
             return
         if self.house.dirt_in_the_house >= 80:
             self.happiness -= 10
@@ -133,7 +133,7 @@ class Wife(Human):
         cprint(f'{self.name} вкусно поела! Всего съела = {food}')
 
     def shopping(self):
-        amount_of_food = 60
+        amount_of_food = 70
         self.house.money_in_the_nightstand -= amount_of_food
         self.house.food_in_the_fridge += amount_of_food
         self.satiety -= 10
@@ -159,10 +159,10 @@ class Wife(Human):
 
     def act(self):
         if self.satiety <= 0:
-            print(f'{self.name} - УМЕРЛA!')
+            cprint(f'{self.name} - УМЕРЛА!', color='red')
             return
         if self.happiness <= 10:
-            print(f'{self.name} - УМЕРЛA от депрессии!')
+            cprint(f'{self.name} - УМЕРЛА от дипресии!', color='red')
             return
         if self.house.dirt_in_the_house >= 80:
             self.happiness -= 10
@@ -192,7 +192,7 @@ class Child(Human):
 
     def act(self):
         if self.satiety <= 0:
-            print(f'{self.name} - УМЕР!')
+            cprint(f'{self.name} - УМЕР', color='red')
             return
         if self.satiety <= 10:
             self.eat()
@@ -209,6 +209,7 @@ class Child(Human):
 
     def sleep(self):
         self.satiety -= 10
+        cprint(f'{self.name} поспал')
 
 
 class Cat:
@@ -223,7 +224,7 @@ class Cat:
 
     def act(self):
         if self.satiety <= 0:
-            print(f'{self.name} - УМЕР!')
+            cprint(f'{self.name} - УМЕР!', color='red')
             return
         choice = randint(1, 3)
         if self.satiety <= 10:
