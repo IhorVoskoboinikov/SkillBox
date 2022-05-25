@@ -43,8 +43,9 @@ from random import randint
 # Подвести итоги жизни за год: сколько было заработано денег, сколько сьедено еды, сколько куплено шуб.
 
 class Human:
-    def __init__(self, name):
+    def __init__(self, name, house):
         self.name = name
+        self.house = house
         self.satiety = 30  # сытость
         self.happiness = 100  # уровень счастья
 
@@ -72,13 +73,6 @@ class House:
 
 class Husband(Human):
     total_money = 0
-
-    def __init__(self, name, house):
-        super().__init__(name=name)
-        self.house = house
-
-    def __str__(self):
-        return super().__str__()
 
     def act(self):
         if self.satiety <= 0:
@@ -117,13 +111,6 @@ class Husband(Human):
 
 class Wife(Human):
     total_fur_coats = 0
-
-    def __init__(self, name, house):
-        super().__init__(name=name)
-        self.house = house
-
-    def __str__(self):
-        return super().__str__()
 
     def eat(self):
         food = randint(20, 31)
@@ -183,13 +170,6 @@ class Wife(Human):
 
 class Child(Human):
 
-    def __init__(self, name, house):
-        super().__init__(name=name)
-        self.house = house
-
-    def __str__(self):
-        return super().__str__()
-
     def act(self):
         if self.satiety <= 0:
             cprint(f'{self.name} - УМЕР', color='red')
@@ -205,7 +185,6 @@ class Child(Human):
         self.satiety += food
         House.total_food += food
         cprint(f'{self.name} вкусно поел! Всего съел = {food}')
-
 
     def sleep(self):
         self.satiety -= 10
@@ -233,9 +212,6 @@ class Cat:
             self.sleep()
         else:
             self.soil()
-
-
-
 
     def eat(self):
         amount_of_cat_food = randint(1, 11)
