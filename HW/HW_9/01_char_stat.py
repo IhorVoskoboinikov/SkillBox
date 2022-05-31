@@ -33,7 +33,6 @@ class FindNumberOfLetters:
         self.file_name = file_name
         self.statistic = {}
         self.total_quantity = 0
-        self.statistic_sorted = []
 
     def open_file_statistic(self):
         with open(self.file_name, 'r', encoding='cp1251') as file:
@@ -44,32 +43,37 @@ class FindNumberOfLetters:
                             self.statistic[elem] += 1
                         else:
                             self.statistic[elem] = 1
-            self.statistic_sorted = sorted(self.statistic.items())
 
-    def create_table_to_print(self):
-        q = '+'
-        w = 'буква'
+
+    def create_table_header(self):
+        plus = '+'
+        letter = 'буква'
         ch = 'частота'
-        t = 'итого'
-        table_header = (f'+{q:-^21}+\n'
-                        f'|{w: ^10}|{ch: ^10}|\n'
-                        f'+{q:-^21}+')
-
+        table_header = (f'+{plus:-^21}+\n'
+                        f'|{letter: ^10}|{ch: ^10}|\n'
+                        f'+{plus:-^21}+')
         print(table_header)
 
-        for letter, quantity in self.statistic_sorted:
+    def create_table_end(self):
+        plus = '+'
+        total = 'итого'
+        table_totals = (f'+{plus:-^21}+\n'
+                        f'|{total: ^10}|{self.total_quantity: ^10}|\n'
+                        f'+{plus:-^21}+')
+        print(table_totals)
+
+    def sorted_statistic(self):
+        for letter, quantity in sorted(self.statistic.items()):
             self.total_quantity += quantity
             print(f'|{letter: ^10}|{quantity: ^10}|')
-
-        table_totals = (f'+{q:-^21}+\n'
-                        f'|{t: ^10}|{self.total_quantity: ^10}|\n'
-                        f'+{q:-^21}+')
-        print(table_totals)
 
 
 my_statistic = FindNumberOfLetters(file_name='voyna-i-mir.txt')
 my_statistic.open_file_statistic()
-my_statistic.create_table_to_print()
+my_statistic.create_table_header()
+my_statistic.sorted_statistic()
+my_statistic.create_table_end()
+
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
