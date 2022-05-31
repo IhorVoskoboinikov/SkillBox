@@ -31,8 +31,9 @@ class FindNumberOfLetters:
 
     def __init__(self, file_name):
         self.file_name = file_name
-        self.statistic = {}
         self.total_quantity = 0
+        self.statistic = {}
+        self.sort_statistic = []
 
     def open_file_statistic(self):
         with open(self.file_name, 'r', encoding='cp1251') as file:
@@ -43,7 +44,7 @@ class FindNumberOfLetters:
                             self.statistic[elem] += 1
                         else:
                             self.statistic[elem] = 1
-
+            self.sort_statistic = sorted(self.statistic.items())
 
     def create_table_header(self):
         plus = '+'
@@ -62,18 +63,43 @@ class FindNumberOfLetters:
                         f'+{plus:-^21}+')
         print(table_totals)
 
-    def sorted_statistic(self):
-        for letter, quantity in sorted(self.statistic.items()):
+    def sort_statistic_for_alphabet(self):  # сортировка по алфавиту по убыванию
+        self.total_quantity = 0
+        self.create_table_header()
+        for letter, quantity in self.sort_statistic:
             self.total_quantity += quantity
             print(f'|{letter: ^10}|{quantity: ^10}|')
+        self.create_table_end()
+
+    def sort_ascending(self):  # сортировка по алфавиту по возрастанию
+        total_quantity = 0
+        self.create_table_header()
+        for letter, quantity in reversed(self.sort_statistic):
+            total_quantity += quantity
+            print(f'|{letter: ^10}|{quantity: ^10}|')
+        self.create_table_end()
+
+    def sort_by_frequency_of_use(self):  # сортировка по частоте по убыванию
+        self.total_quantity = 0
+        self.create_table_header()
+        sorted_value = sorted(self.statistic.values())
+        new_sort_statistic = {}
+        for i in sorted_value:
+            for k in self.statistic.keys():
+                if self.statistic[k] == i:
+                    new_sort_statistic[k] = self.statistic[k]
+                    break
+        for letter, quantity in reversed(new_sort_statistic.items()):
+            self.total_quantity += quantity
+            print(f'|{letter: ^10}|{quantity: ^10}|')
+        self.create_table_end()
 
 
 my_statistic = FindNumberOfLetters(file_name='voyna-i-mir.txt')
 my_statistic.open_file_statistic()
-my_statistic.create_table_header()
-my_statistic.sorted_statistic()
-my_statistic.create_table_end()
-
+my_statistic.sort_statistic_for_alphabet()
+my_statistic.sort_ascending()
+my_statistic.sort_by_frequency_of_use()
 
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
