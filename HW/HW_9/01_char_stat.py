@@ -20,6 +20,7 @@
 #
 # Упорядочивание по частоте - по убыванию. Ширину таблицы подберите по своему вкусу
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
+from collections import defaultdict
 
 class FindNumberOfLetters:
 
@@ -28,6 +29,7 @@ class FindNumberOfLetters:
         self.total_quantity = 0
         self.statistic = {}
         self.sort_statistic = []
+        # self.statistic = defaultdict(int) #  вариант при использовании импорта
 
     def open_file_statistic(self):
         with open(self.file_name, 'r', encoding='cp1251') as file:
@@ -39,6 +41,9 @@ class FindNumberOfLetters:
                         else:
                             self.statistic[elem] = 1
             self.sort_statistic = sorted(self.statistic.items())
+            # for elem in line: #  вариант если мы используем импорт
+            #     if 'а' <= elem.lower() <= 'я':
+            #         self.statistic[elem] += 1
 
     def create_table_header(self):
         plus = '+'
