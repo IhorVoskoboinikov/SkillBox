@@ -18,10 +18,17 @@
 #
 # Входные параметры: файл для анализа, файл результата
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
+import time
+from time import *
+
 
 class ReadFileParser:
 
     def __init__(self, file_for_analysis, result_file, aggregation_by):
+        if aggregation_by in ['hour', 'minute', 'second']:
+            self.aggregation_by = aggregation_by
+        else:
+            raise RuntimeError()
         self.aggregation_by = aggregation_by
         self.file_name = file_for_analysis
         self.result_file = result_file
@@ -35,10 +42,21 @@ class ReadFileParser:
     def sort_file(self, file):
         for line in file:
             if line.endswith('NOK\n'):
-                if line[1:17] in self.file_to_write:
-                    self.file_to_write[line[1:17]] += 1
-                else:
-                    self.file_to_write[line[1:17]] = 1
+                if self.aggregation_by == 'hour':
+                    if line[1:14] in self.file_to_write:
+                        self.file_to_write[line[1:14]] += 1
+                    else:
+                        self.file_to_write[line[1:14]] = 1
+                elif self.aggregation_by == 'minute':
+                    if line[1:17] in self.file_to_write:
+                        self.file_to_write[line[1:17]] += 1
+                    else:
+                        self.file_to_write[line[1:17]] = 1
+                elif self.aggregation_by == 'second':
+                    if line[1:20] in self.file_to_write:
+                        self.file_to_write[line[1:20]] += 1
+                    else:
+                        self.file_to_write[line[1:20]] = 1
         self.sort_file_to_write = sorted(self.file_to_write.items())
 
     def write_file(self):
@@ -47,7 +65,8 @@ class ReadFileParser:
                 file.write('[' + i + ']' + '  -  ' + str(y) + '\n')
 
 
-parser = ReadFileParser(file_for_analysis='events.txt', result_file='result.txt')
+
+parser = ReadFileParser(file_for_analysis='events.txt', result_file='result.txt', aggregation_by='second')
 parser.read_file()
 parser.write_file()
 print(parser.file_to_write)
