@@ -21,7 +21,8 @@
 
 class ReadFileParser:
 
-    def __init__(self, file_for_analysis, result_file):
+    def __init__(self, file_for_analysis, result_file, aggregation_by):
+        self.aggregation_by = aggregation_by
         self.file_name = file_for_analysis
         self.result_file = result_file
         self.file_to_write = {}
