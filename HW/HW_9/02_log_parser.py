@@ -33,7 +33,7 @@ class ReadFileParser:
 
     def sort_file(self, file):
         for line in file:
-            if 'NOK' in line:
+            if line.endswith('NOK\n'):
                 if line[1:17] in self.file_to_write:
                     self.file_to_write[line[1:17]] += 1
                 else:
@@ -49,7 +49,7 @@ class ReadFileParser:
 parser = ReadFileParser(file_for_analysis='events.txt', result_file='result.txt')
 parser.read_file()
 parser.write_file()
-print(parser.sort_file_to_write)
+print(parser.file_to_write)
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
 #  - по месяцу
