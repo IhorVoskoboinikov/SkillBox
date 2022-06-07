@@ -48,10 +48,10 @@ class FileVerification:
                     self.list_registrations_bad[line] = ecx
                     continue
                 except NotNameError:
-                    self.list_registrations_bad[line] = 'поле имени содержит НЕ только буквы'
+                    self.list_registrations_bad[line] = 'Поле имени содержит НЕ только буквы'
                     continue
                 except NotEmailError:
-                    self.list_registrations_bad[line] = 'поле емейл НЕ содержит @ и .(точку)'
+                    self.list_registrations_bad[line] = 'Поле емейл НЕ содержит @ и .(точку)'
                     continue
                 self.list_registrations_good.append(line)
 
@@ -66,9 +66,9 @@ class FileVerification:
             else:
                 raise NotNameError
         if 10 > fild_age or fild_age > 99:
-            raise ValueError('поле возраст НЕ является числом от 10 до 99')
+            raise ValueError('Поле возраст НЕ является числом от 10 до 99')
         if fild_email.count('@' or '.'):
-            print("Нашли собаку")
+            pass
         else:
             raise NotEmailError
 
