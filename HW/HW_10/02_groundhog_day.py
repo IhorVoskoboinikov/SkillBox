@@ -24,7 +24,6 @@ from termcolor import cprint
 ENLIGHTENMENT_CARMA_LEVEL = 777
 
 
-
 class IamGodError(BaseException):
     pass
 
