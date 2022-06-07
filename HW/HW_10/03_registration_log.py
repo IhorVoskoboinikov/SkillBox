@@ -21,5 +21,71 @@
 # - поле емейл НЕ содержит @ и .(точку): NotEmailError (кастомное исключение)
 # - поле возраст НЕ является числом от 10 до 99: ValueError
 # Вызов метода обернуть в try-except.
+class NotNameError(BaseException):
+    pass
 
-# TODO здесь ваш код
+
+class NotEmailError(BaseException):
+    pass
+
+
+class FileVerification:
+
+    def __init__(self, file, registrations_good, registrations_bad):
+        self.file = file
+        self.registrations_good = registrations_good
+        self.registrations_bad = registrations_bad
+        self.list_registrations_good = []
+        self.list_registrations_bad = {}
+
+    def open_file(self):
+        with open(self.file, 'r', encoding='utf-8') as file_to_check:
+            for line in file_to_check:
+                line = line[:-1]
+                try:
+                    self.check_all_fields_are_filled(line)
+                except ValueError as ecx:
+                    self.list_registrations_bad[line] = ecx
+                    continue
+                except NotNameError:
+                    self.list_registrations_bad[line] = 'поле имени содержит НЕ только буквы'
+                    continue
+                except NotEmailError:
+                    self.list_registrations_bad[line] = 'поле емейл НЕ содержит @ и .(точку)'
+                    continue
+                self.list_registrations_good.append(line)
+
+    def check_all_fields_are_filled(self, line):
+        fild_name, fild_email, fild_age = line.split(' ')
+        fild_name = str(fild_name)
+        fild_email = str(fild_email)
+        fild_age = int(fild_age)
+        for letter in fild_name:
+            if 'а' <= letter.lower() <= 'я' or letter == 'ё':
+                continue
+            else:
+                raise NotNameError
+        if 10 > fild_age or fild_age > 99:
+            raise ValueError('поле возраст НЕ является числом от 10 до 99')
+        if fild_email.count('@' or '.'):
+            print("Нашли собаку")
+        else:
+            raise NotEmailError
+
+    def write_file(self):
+        with open(self.registrations_bad, 'w', encoding='utf-8') as file_bad:
+            for i, y in self.list_registrations_bad.items():
+                file_bad.write('[' + i + ']' + ' - ' + str(y) + '\n')
+
+        with open(self.registrations_good, 'w', encoding='utf-8') as file_good:
+            for i in self.list_registrations_good:
+                file_good.write('[' + i + ']' + '\n')
+
+
+check = FileVerification(file='registrations.txt', registrations_good='registrations_good.log.txt',
+                         registrations_bad='registrations_bad.log.txt')
+
+check.open_file()
+check.write_file()
+# print(check.fild_email)
+# print(check.fild_age)
