@@ -68,7 +68,7 @@ class FileVerification:
         for letter in field_name:
             if not (('а' <= field_name.lower() <= 'я') or (letter == 'ё')):
                 raise NotNameError
-        if not (10 < field_age < 99):
+        if not (10 <= field_age <= 99):
             raise ValueError('Поле возраст НЕ является числом от 10 до 99')
         if ('@' not in field_email) or ('.' not in field_email):
             raise NotEmailError
