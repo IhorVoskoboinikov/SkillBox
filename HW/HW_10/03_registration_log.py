@@ -21,6 +21,7 @@
 # - поле емейл НЕ содержит @ и .(точку): NotEmailError (кастомное исключение)
 # - поле возраст НЕ является числом от 10 до 99: ValueError
 # Вызов метода обернуть в try-except.
+
 class NotNameError(BaseException):
     pass
 
@@ -43,7 +44,7 @@ class FileVerification:
             for line in file_to_check:
                 line = line[:-1]
                 try:
-                    self.check_all_fields_are_filled(line)
+                    self.check_all_fields(line)
                 except ValueError as ecx:
                     self.list_registrations_bad[line] = ecx
                     continue
@@ -55,21 +56,17 @@ class FileVerification:
                     continue
                 self.list_registrations_good.append(line)
 
-    def check_all_fields_are_filled(self, line):
+    def check_all_fields(self, line):
         fild_name, fild_email, fild_age = line.split(' ')
         fild_name = str(fild_name)
         fild_email = str(fild_email)
         fild_age = int(fild_age)
         for letter in fild_name:
-            if 'а' <= letter.lower() <= 'я' or letter == 'ё':
-                continue
-            else:
+            if not 'а' <= fild_name.lower() <= 'я' or letter == 'ё':
                 raise NotNameError
-        if 10 > fild_age or fild_age > 99:
+        if not 10 < fild_age < 99:
             raise ValueError('Поле возраст НЕ является числом от 10 до 99')
-        if fild_email.count('@' or '.'):
-            pass
-        else:
+        if not fild_email.count('@' or '.'):
             raise NotEmailError
 
     def write_file(self):
@@ -87,5 +84,3 @@ check = FileVerification(file='registrations.txt', registrations_good='registrat
 
 check.open_file()
 check.write_file()
-# print(check.fild_email)
-# print(check.fild_age)
