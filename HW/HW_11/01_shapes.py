@@ -63,11 +63,15 @@ def get_polygon(n):
                 point = v1.end_point
 
         return hexagon
+
     else:
-        print('Нет такой фигуры для рисования')
+        raise TypeError('Нет такой фигуры для рисования!!!')
 
 
-draw_triangle = get_polygon(n=6)
-draw_triangle(point=sd.get_point(200, 200), angle=0, length=100)
+try:
+    draw_triangle = get_polygon(n=2)
+    draw_triangle(point=sd.get_point(200, 200), angle=0, length=100)
+except TypeError as exc:
+    print(exc)
 
 sd.pause()
