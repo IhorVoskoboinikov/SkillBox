@@ -70,11 +70,11 @@ def prime_numbers_generator(n):
                 break
         else:
             prime_numbers.append(number)
-    return prime_numbers
+            yield number
 
 
-
-for number in prime_numbers_generator(n=10):
+print(prime_numbers_generator(n=100))
+for number in prime_numbers_generator(n=100):
     print(number)
 
 # Часть 3
