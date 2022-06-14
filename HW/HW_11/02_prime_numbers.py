@@ -31,21 +31,23 @@ class PrimeNumbers:
     def __iter__(self):
         self.i = 0
         self.prime_numbers = []
-        return self
-
-    def __next__(self):
-        self.i += 1
         for number in range(2, self.n + 1):
             for prime in self.prime_numbers:
                 if number % prime == 0:
                     break
             else:
                 self.prime_numbers.append(number)
+        return self
 
-        return self.prime_numbers[self.i]
+    def __next__(self):
+        if self.i >= len(self.prime_numbers):
+            raise StopIteration()
+        next_prime = self.prime_numbers[self.i]
+        self.i += 1
+        return next_prime
 
 
-prime_number_iterator = PrimeNumbers(n=100)
+prime_number_iterator = PrimeNumbers(n=10000)
 for number in prime_number_iterator:
     print(number)
 
