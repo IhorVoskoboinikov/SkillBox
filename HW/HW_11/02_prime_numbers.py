@@ -27,16 +27,11 @@ class PrimeNumbers:
     def __init__(self, n):
         self.n = n
         self.i = 0
+        self.prime_numbers = []
 
     def __iter__(self):
         self.i = 0
-        self.prime_numbers = []
-        for number in range(2, self.n + 1):
-            for prime in self.prime_numbers:
-                if number % prime == 0:
-                    break
-            else:
-                self.prime_numbers.append(number)
+        self.get_prime_numbers()
         return self
 
     def __next__(self):
@@ -45,6 +40,16 @@ class PrimeNumbers:
         next_prime = self.prime_numbers[self.i]
         self.i += 1
         return next_prime
+
+    def get_prime_numbers(self):
+        self.prime_numbers = []
+        for number in range(2, self.n + 1):
+            for prime in self.prime_numbers:
+                if number % prime == 0:
+                    break
+            else:
+                self.prime_numbers.append(number)
+        return self.prime_numbers
 
 
 prime_number_iterator = PrimeNumbers(n=10000)
