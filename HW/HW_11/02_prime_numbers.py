@@ -30,20 +30,22 @@ class PrimeNumbers:
 
     def __iter__(self):
         self.i = 0
+        self.prime_numbers = []
         return self
 
     def __next__(self):
-        prime_numbers = []
+        self.i += 1
         for number in range(2, self.n + 1):
-            for prime in prime_numbers:
+            for prime in self.prime_numbers:
                 if number % prime == 0:
                     break
             else:
-                prime_numbers.append(number)
-        return prime_numbers
+                self.prime_numbers.append(number)
+
+        return self.prime_numbers[self.i]
 
 
-prime_number_iterator = PrimeNumbers(n=10000)
+prime_number_iterator = PrimeNumbers(n=100)
 for number in prime_number_iterator:
     print(number)
 
