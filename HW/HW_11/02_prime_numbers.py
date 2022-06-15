@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from random import randint
 
 
 # Есть функция генерации списка простых чисел
@@ -62,20 +63,20 @@ def get_prime_numbers(n):
 # Распечатать все простые числа до 10000 в столбик
 
 
-def prime_numbers_generator(n):
-    prime_numbers = []
-    for number in range(2, n + 1):
-        for prime in prime_numbers:
-            if number % prime == 0:
-                break
-        else:
-            prime_numbers.append(number)
-            yield number
-
-
-print(prime_numbers_generator(n=100))
-for number in prime_numbers_generator(n=100):
-    print(number)
+# def prime_numbers_generator(n):
+#     prime_numbers = []
+#     for number in range(2, n + 1):
+#         for prime in prime_numbers:
+#             if number % prime == 0:
+#                 break
+#         else:
+#             prime_numbers.append(number)
+#             yield number
+#
+#
+# print(prime_numbers_generator(n=100))
+# for number in prime_numbers_generator(n=100):
+#     print(number)
 
 # Часть 3
 # Написать несколько функций-фильтров, которые выдает True, если число:
@@ -92,3 +93,23 @@ for number in prime_numbers_generator(n=100):
 # простых счастливых палиндромных чисел и так далее. Придумать не менее 2х способов.
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
+
+def lucky_number(numbers):
+    # print(numbers)
+    for number in numbers:
+        number = str(number)
+        if len(number) < 2:
+            continue
+        if len(number) == 2 or len(number) == 3:
+            if int(number[0]) == int(number[-1]):
+                print(number)
+        if len(number) == 4 or len(number) == 5:
+            if (int(number[0]) + int(number[1])) == (int(number[-1]) + int(number[-2])):
+                print(number)
+
+
+
+l_n = get_prime_numbers(n=10000)
+print(l_n)
+# test = [i for i in range(1, 100000)]
+lucky_number(l_n)
