@@ -106,10 +106,28 @@ def lucky_number(numbers):
         if len(number) == 4 or len(number) == 5:
             if (int(number[0]) + int(number[1])) == (int(number[-1]) + int(number[-2])):
                 print(number)
+    else:
+        print('Счастливые номера закончились')
 
+def polysyndromic_number(numbers):
+    # print(numbers)
+    for number in numbers:
+        number = str(number)
+        if len(number) < 2:
+            continue
+        if len(number) == 2:
+            if int(number[0]) == int(number[-1]):
+                print(number)
+        if len(number) == 4:
+            if int(number[0]) == int(number[-1]) and int(number[1]) == int(number[-2]):
+                print(number)
+    else:
+        print('Палиндромные номера закончились')
 
 
 l_n = get_prime_numbers(n=10000)
-print(l_n)
-# test = [i for i in range(1, 100000)]
+p_n = get_prime_numbers(n=10000)
 lucky_number(l_n)
+polysyndromic_number(p_n)
+
+# test = [i for i in range(1, 10000)]
