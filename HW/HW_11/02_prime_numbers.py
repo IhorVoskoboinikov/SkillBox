@@ -95,39 +95,41 @@ def get_prime_numbers(n):
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
 
 def lucky_number(numbers):
-    # print(numbers)
     for number in numbers:
         number = str(number)
-        if len(number) < 2:
+        n = len(number)
+        a = sum(map(int, number[:n // 2]))
+        b = sum(map(int, number[n // 2 + n % 2:]))
+        if n < 2:
             continue
-        if len(number) == 2 or len(number) == 3:
-            if int(number[0]) == int(number[-1]):
-                print(number)
-        if len(number) == 4 or len(number) == 5:
-            if (int(number[0]) + int(number[1])) == (int(number[-1]) + int(number[-2])):
-                print(number)
+        if a == b:
+            print(number)
     else:
         print('Счастливые номера закончились')
+
+
+# Первичный результат для четных:
+# a = sum(int(x) for x in number[0:(int((len(number))/2))])
+# b = sum(int(x) for x in number[(int((len(number))/2)):])
+# Первичный результат для нечетных:
+# a = sum(int(x) for x in number[0:(int((len(number))/2))])
+# b = sum(int(x) for x in number[(int((len(number))/2)+1):])
 
 def polysyndromic_number(numbers):
     # print(numbers)
     for number in numbers:
         number = str(number)
+        n = len(number)
         if len(number) < 2:
             continue
-        if len(number) == 2:
-            if int(number[0]) == int(number[-1]):
-                print(number)
-        if len(number) == 4:
-            if int(number[0]) == int(number[-1]) and int(number[1]) == int(number[-2]):
-                print(number)
+        if number[0:(n//2)] == number[-1:((n//2)-1):-1]:
+            print(number)
     else:
         print('Палиндромные номера закончились')
 
-
+# test = [i for i in range(1, 10000)]
 l_n = get_prime_numbers(n=10000)
 p_n = get_prime_numbers(n=10000)
 lucky_number(l_n)
 polysyndromic_number(p_n)
 
-# test = [i for i in range(1, 10000)]
