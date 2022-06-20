@@ -9,8 +9,20 @@
 
 
 def log_errors(func):
-    pass
-    # TODO здесь ваш код
+    def search_for_errors(*args, **kwargs):
+        try:
+
+            result = func(*args, **kwargs)
+
+            return result
+
+        except BaseException as exc:
+            with open('function_errors.log.txt', 'a', encoding='utf-8') as log:
+                log.write(f'Имя функции - {func.__name__},'
+                          f'параметры вызова - {args, kwargs} '
+                          f'ошибка - {exc} \n')
+
+    return search_for_errors
 
 
 # Проверить работу на следующих функциях
@@ -45,11 +57,9 @@ for line in lines:
         print(f'Invalid format: {exc}')
 perky(param=42)
 
-
 # Усложненное задание (делать по желанию).
 # Написать декоратор с параметром - именем файла
 #
 # @log_errors('function_errors.log')
 # def func():
 #     pass
-
