@@ -16,10 +16,11 @@ def log_errors(func):
 
             return result
 
-        except BaseException as exc:
-            with open('function_errors.log.txt', 'a', encoding='utf-8') as log:
+        except Exception as exc:
+            with open('function_errors.log', 'a', encoding='utf-8') as log:
                 log.write(f'Имя функции - {func.__name__},'
-                          f'параметры вызова - {args, kwargs} '
+                          f'параметры вызова - {args, kwargs},'
+                          f'тип ошибки {type(exc)}'
                           f'ошибка - {exc} \n')
 
     return search_for_errors
