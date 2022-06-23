@@ -91,52 +91,56 @@ class ExchangeTrading:
         for filename in os.listdir(self.file_name):
             # print(f"{'*' * 30}Читаем файл - {filename}")
             with open(os.path.join(self.file_name, filename), 'r') as file_name_to_check:
-                prices_in_file = list()
-                for line in itertools.islice(file_name_to_check, 1, None):
-                    # print(line)
-                    if line.endswith('\n'):
-                        line = line[:-1]
-                    ticers = line.split(',')
-                    if len(ticers) != 4:
-                        raise ValueError('Не все поля заполнены')
-                    name_tiker, transaction_time, price, quantuty = ticers
-                    price = float(price)
-                    # print(price)
-                    prices_in_file.append(price)
-                average_price = (max(prices_in_file) + min(prices_in_file) / 2)
-                volatility = ((max(prices_in_file) - min(prices_in_file)) / average_price) * 100
-                if volatility == 0:
-                    self.tiker_volatility_zero.append(name_tiker)
-                else:
-                    self.tiker_volatility[name_tiker] = round(volatility, 2)
+                self.general_calculations(file_name_to_check)
+        self.calculating_the_min_and_max_values()
+        self.calculation_output()
+
+    def calculation_output(self):
+        print('Максимальная волатильность:')
+        for i, y in self.sorted_dict_max.items():
+            q = i + " - " + str(y) + '%'
+            print(f'{q: ^25}')
+        print('Минимальная волатильность:')
+        for i, y in self.sorted_dict_min.items():
+            q = i + " - " + str(y) + '%'
+            print(f'{q: ^25}')
+        print(f"Нулевая волатильность:\n{', '.join(self.tiker_volatility_zero)}")
+
+    def general_calculations(self, file_name_to_check):
+        prices_in_file = list()
+        for line in itertools.islice(file_name_to_check, 1, None):
+            # print(line)
+            if line.endswith('\n'):
+                line = line[:-1]
+            ticers = line.split(',')
+            if len(ticers) != 4:
+                raise ValueError('Не все поля заполнены')
+            name_tiker, transaction_time, price, quantuty = ticers
+            price = float(price)
+            # print(price)
+            prices_in_file.append(price)
+        average_price = (max(prices_in_file) + min(prices_in_file) / 2)
+        volatility = ((max(prices_in_file) - min(prices_in_file)) / average_price) * 100
+        if volatility == 0:
+            self.tiker_volatility_zero.append(name_tiker)
+        else:
+            self.tiker_volatility[name_tiker] = round(volatility, 2)
+
+    def calculating_the_min_and_max_values(self):
         sorted_values = sorted(self.tiker_volatility.values())
         max_values = sorted_values[-1:-4:-1]
         min_values = sorted_values[0:4]
         # print(min_values)
-
         for i in max_values:
             for k in self.tiker_volatility.keys():
                 if self.tiker_volatility[k] == i:
                     self.sorted_dict_max[k] = self.tiker_volatility[k]
                     break
-
         for i in min_values:
             for k in self.tiker_volatility.keys():
                 if self.tiker_volatility[k] == i:
                     self.sorted_dict_min[k] = self.tiker_volatility[k]
                     break
-
-        print('Максимальная волатильность:')
-        for i, y in self.sorted_dict_max.items():
-            q = i + " - " + str(y) + '%'
-            print(f'{q: ^25}')
-
-        print('Минимальная волатильность:')
-        for i, y in self.sorted_dict_min.items():
-            q = i + " - " + str(y) + '%'
-            print(f'{q: ^25}')
-
-        print(f"Нулевая волатильность:\n{', '.join(self.tiker_volatility_zero)}")
 
 
 ticker = ExchangeTrading(file='trades')
