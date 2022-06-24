@@ -75,9 +75,9 @@ class ExchangeTrading:
     def __init__(self, file):
         self.file_name = file
         self.tiker_volatility = {}
-        self.tiker_volatility_zero = []
-        self.sorted_dict_max = {}
-        self.sorted_dict_min = {}
+        self.sorted_volatility_zero = []
+        self.sorted_list_max = []
+        self.sorted_list_min = []
 
     def unzip(self):
         zfile = zipfile.ZipFile(self.file_name, 'r')
@@ -93,18 +93,19 @@ class ExchangeTrading:
             with open(os.path.join(self.file_name, filename), 'r') as file_name_to_check:
                 self.general_calculations(file_name_to_check)
         self.calculating_the_min_and_max_values()
+        self.sorted_volatility_zero = sorted(self.sorted_volatility_zero)
         self.calculation_output()
 
     def calculation_output(self):
         print('Максимальная волатильность:')
-        for i, y in self.sorted_dict_max.items():
-            q = i + " - " + str(y) + '%'
+        for i, y in self.sorted_list_max:
+            q = y + " - " + str(i) + '%'
             print(f'{q: ^25}')
         print('Минимальная волатильность:')
-        for i, y in self.sorted_dict_min.items():
-            q = i + " - " + str(y) + '%'
+        for i, y in self.sorted_list_min:
+            q = y + " - " + str(i) + '%'
             print(f'{q: ^25}')
-        print(f"Нулевая волатильность:\n{', '.join(self.tiker_volatility_zero)}")
+        print(f"Нулевая волатильность:\n{', '.join(self.sorted_volatility_zero)}")
 
     def general_calculations(self, file_name_to_check):
         prices_in_file = list()
@@ -121,26 +122,19 @@ class ExchangeTrading:
             prices_in_file.append(price)
         average_price = (max(prices_in_file) + min(prices_in_file) / 2)
         volatility = ((max(prices_in_file) - min(prices_in_file)) / average_price) * 100
+        self.calculating_zero_values(name_tiker, volatility)
+
+    def calculating_zero_values(self, name_tiker, volatility):
         if volatility == 0:
-            self.tiker_volatility_zero.append(name_tiker)
+            self.sorted_volatility_zero.append(name_tiker)
         else:
             self.tiker_volatility[name_tiker] = round(volatility, 2)
 
     def calculating_the_min_and_max_values(self):
-        sorted_values = sorted(self.tiker_volatility.values())
-        max_values = sorted_values[-1:-4:-1]
-        min_values = sorted_values[0:4]
-        # print(min_values)
-        for i in max_values:
-            for k in self.tiker_volatility.keys():
-                if self.tiker_volatility[k] == i:
-                    self.sorted_dict_max[k] = self.tiker_volatility[k]
-                    break
-        for i in min_values:
-            for k in self.tiker_volatility.keys():
-                if self.tiker_volatility[k] == i:
-                    self.sorted_dict_min[k] = self.tiker_volatility[k]
-                    break
+        sorted_tickers = sorted([(volatility, tiker_name) for tiker_name, volatility in self.tiker_volatility.items()])
+        self.sorted_list_max = [x for x in sorted_tickers[-1:-4:-1]]
+        self.sorted_list_min = [x for x in sorted_tickers[0:3]]
+        self.sorted_list_min.sort(key=lambda x: -x[0])
 
 
 ticker = ExchangeTrading(file='trades')
