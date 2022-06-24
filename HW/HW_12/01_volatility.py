@@ -133,8 +133,7 @@ class ExchangeTrading:
     def calculating_the_min_and_max_values(self):
         sorted_tickers = sorted([(volatility, tiker_name) for tiker_name, volatility in self.tiker_volatility.items()])
         self.sorted_list_max = [x for x in sorted_tickers[-1:-4:-1]]
-        self.sorted_list_min = [x for x in sorted_tickers[0:3]]
-        self.sorted_list_min.sort(key=lambda x: -x[0])
+        self.sorted_list_min = [x for x in sorted_tickers[2::-1]]
 
 
 ticker = ExchangeTrading(file='trades')
