@@ -31,7 +31,6 @@ class ExchangeTrading(threading.Thread):
             volatility = ((max(prices_in_file) - min(prices_in_file)) / average_price) * 100
             self.name_tikers.append(name_tiker)
             self.volatilitys.append(round(volatility, 2))
-        # self.calculation_output()
 
 
 def calculation_output(sorted_list_max, sorted_list_min, sorted_volatility_zero):
@@ -46,17 +45,20 @@ def calculation_output(sorted_list_max, sorted_list_min, sorted_volatility_zero)
     print(f"Нулевая волатильность:\n{', '.join(sorted_volatility_zero)}")
 
 
-def calculating_the_min_zero_max_values(name_tiker, volatility):
-    if volatility == 0:
-        sorted_volatility_zero.append(name_tiker)
-    else:
-        tiker_volatility[name_tiker] = volatility
-    sorted_tickers = sorted([(volatility, tiker_name) for tiker_name, volatility in tiker_volatility.items()])
-    sorted_list_max = [x for x in sorted_tickers[-1:-4:-1]]
-    sorted_list_min = [x for x in sorted_tickers[2::-1]]
+def calculating_the_min_zero_max_values(tiker_volatility):
+    for name_tiker, volatility in tiker_volatility.items():
+        if volatility == 0:
+            sorted_volatility_zero.append(name_tiker)
+        else:
+            sorted_volatility[name_tiker] = volatility
+        sorted_tickers = sorted([(volatility, tiker_name) for tiker_name, volatility in sorted_volatility.items()])
+        global sorted_list_max, sorted_list_min
+        sorted_list_max = [x for x in sorted_tickers[-1:-4:-1]]
+        sorted_list_min = [x for x in sorted_tickers[2::-1]]
 
 
 tiker_volatility = {}
+sorted_volatility = {}
 sorted_volatility_zero = []
 sorted_list_max = []
 sorted_list_min = []
@@ -73,17 +75,9 @@ def main():
         ticker.join()
     for ticker in tickers:
         tiker_volatility[ticker.name_tikers[0]] = ticker.volatilitys[0]
-    for name_tiker, volatility in tiker_volatility.items():
-        if volatility == 0:
-            sorted_volatility_zero.append(name_tiker)
-        else:
-            tiker_volatility[name_tiker] = volatility
-        sorted_tickers = sorted([(volatility, tiker_name) for tiker_name, volatility in tiker_volatility.items()])
-        print(sorted_tickers)
-        sorted_list_max = [x for x in sorted_tickers[-1:-4:-1]]
-        sorted_list_min = [x for x in sorted_tickers[2::-1]]
-    # calculation_output(sorted_list_max=sorted_list_max, sorted_list_min=sorted_list_min,
-    #                    sorted_volatility_zero=sorted_volatility_zero)
+    calculating_the_min_zero_max_values(tiker_volatility=tiker_volatility)
+    calculation_output(sorted_list_max=sorted_list_max, sorted_list_min=sorted_list_min,
+                       sorted_volatility_zero=sorted_volatility_zero)
 
 
 if __name__ == '__main__':
