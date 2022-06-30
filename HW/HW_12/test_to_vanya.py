@@ -14,10 +14,8 @@ class ExchangeTrading(threading.Thread):
 
     def run(self):
         with open(os.path.join(self.directory, self.file_name), 'r') as file_name_to_check:
-            # print(f'{"*" * 10} Read file - f{file_name_to_check}')
             prices_in_file = list()
             for line in itertools.islice(file_name_to_check, 1, None):
-                # print(line)
                 if line.endswith('\n'):
                     line = line[:-1]
                 ticers = line.split(',')
@@ -25,7 +23,6 @@ class ExchangeTrading(threading.Thread):
                     raise ValueError('Не все поля заполнены')
                 name_tiker, transaction_time, price, quantuty = ticers
                 price = float(price)
-                # print(price)
                 prices_in_file.append(price)
             average_price = (max(prices_in_file) + min(prices_in_file) / 2)
             volatility = ((max(prices_in_file) - min(prices_in_file)) / average_price) * 100
@@ -65,9 +62,7 @@ sorted_list_min = []
 
 
 def main():
-    # lock = threading.Lock()
     tickers = [ExchangeTrading(file=filename, directory='trades', ) for filename in os.listdir('trades')]
-    # print(tickers)
 
     for ticker in tickers:
         ticker.start()
