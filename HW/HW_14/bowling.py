@@ -12,7 +12,8 @@ def get_score(game_result):
             list_result.append(15)
         elif '-' in i:
             y = i.replace('-', '')
-            list_result.append(int(y))
+            if y:
+                list_result.append(int(y))
         else:
             list_result.append(int(i[0]) + int(i[1]))
         print(i)
