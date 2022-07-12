@@ -20,7 +20,7 @@ class Bowling:
             for throw_number in range(1, 3):
                 if throw_number == 1:
                     if first_throw == 0:
-                        self.game_result_player.append('-/')
+                        self.game_result_player.append('-')
                         second_throw = randint(0, self.SKITTLES)
                     elif 1 <= first_throw <= 9:
                         self.game_result_player.append(str(first_throw))
@@ -31,6 +31,9 @@ class Bowling:
                     if second_throw == 0:
                         self.game_result_player.append('-')
                         break
+                    if second_throw == 10 or (first_throw + second_throw) == 10:
+                        self.game_result_player.append('/')
+                        break
                     self.game_result_player.append(str(second_throw))
             self.FRAMES -= 1
         self.final_result = ''.join(self.game_result_player)
@@ -38,4 +41,6 @@ class Bowling:
 
 ihor = Bowling(player_name='Ihor')
 ihor.play_game()
+# print(ihor)
+print(ihor.game_result_player)
 print(ihor.final_result)
