@@ -21,7 +21,6 @@ class Bowling:
                 if throw_number == 1:
                     if first_throw == 0:
                         self.game_result_player.append('-')
-                        second_throw = randint(0, self.SKITTLES)
                     elif 1 <= first_throw <= 9:
                         self.game_result_player.append(str(first_throw))
                     else:
