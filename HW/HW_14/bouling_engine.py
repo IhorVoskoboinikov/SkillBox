@@ -20,13 +20,13 @@ class Bowling:
             for throw_index, throw in enumerate([first_throw, second_throw]):
                 if throw == 0:
                     self.game_result_player.append('-')
-                if throw == 10:
+                elif throw == 10:
                     if throw_index == 0:
                         self.game_result_player.append('X')
                         break
                     else:
                         self.game_result_player.append('/')
-                if 1 <= throw <= 9:
+                else:
                     if throw_index == 1 and first_throw + second_throw == 10:
                         self.game_result_player.append('/')
                     else:
@@ -34,8 +34,8 @@ class Bowling:
         self.final_result = ''.join(self.game_result_player)
 
 
-ihor = Bowling(player_name='Ihor')
-ihor.play_game()
-print(ihor)
-# print(ihor.game_result_player)
-# print(ihor.final_result)
+if __name__ == "__main__":
+    ihor = Bowling(player_name='Ihor')
+    ihor.play_game()
+    print(ihor)
+
