@@ -30,7 +30,7 @@ class Bowling:
                     if second_throw == 0:
                         self.game_result_player.append('-')
                         break
-                    if second_throw == 10 or (first_throw + second_throw) == 10:
+                    if first_throw + second_throw == 10:
                         self.game_result_player.append('/')
                         break
                     self.game_result_player.append(str(second_throw))
@@ -40,6 +40,6 @@ class Bowling:
 
 ihor = Bowling(player_name='Ihor')
 ihor.play_game()
-# print(ihor)
-print(ihor.game_result_player)
-print(ihor.final_result)
+print(ihor)
+# print(ihor.game_result_player)
+# print(ihor.final_result)
