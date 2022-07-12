@@ -21,7 +21,6 @@ def get_score(game_result):
     print(sum(list_result))
 
 
-
 ihor = Bowling(player_name='Ihor')
 ihor.play_game()
 print(ihor)
