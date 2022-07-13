@@ -5,6 +5,10 @@ from HW_14.bowling_additional import get_score
 
 class BowlingTest(unittest.TestCase):
 
+    def test_for_none(self):
+        self.result = get_score(game_result='')
+        self.assertEqual(self.result, 0)
+
     def test_for_numbers(self):
         self.result = get_score(game_result='25')
         self.assertEqual(self.result, 7)
