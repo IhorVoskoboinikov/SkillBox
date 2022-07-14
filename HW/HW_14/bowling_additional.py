@@ -37,13 +37,23 @@ def get_score(game_result):
 
     while i < n:
         curr_char = game_result[i]
+        try:
+            if curr_char == '/':
+                raise ValueError(f'Первный бросок не может быть - {curr_char} ')
+        except Exception as exc:
+            print(type(exc), exc)
+            break
         if curr_char == 'X':
             result += multiplier * 20
             multiplier = 2
             i += 1
             continue
 
-        next_char = game_result[i + 1]
+        try:
+            next_char = game_result[i + 1]
+        except IndexError as exc:
+            print(type(exc), 'Нет такого индекса (броска)!')
+            break
 
         if next_char == '/':
             result += multiplier * 15
@@ -52,7 +62,7 @@ def get_score(game_result):
             result += 0 if next_char == '-' else (multiplier * int(next_char))
         multiplier = 1
         i += 2
-    print(result)
+    # print(result)
     return result
 
 
@@ -60,5 +70,5 @@ if __name__ == "__main__":
     ihor = Bowling(player_name='Ihor')
     ihor.play_game()
     result = ihor.final_result
-    get_score(game_result=result)
-    # get_score(game_result='derdfhfgdg')
+    # get_score(game_result=result)
+    get_score(game_result='3/1')
