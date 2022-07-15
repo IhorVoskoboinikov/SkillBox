@@ -42,14 +42,6 @@ res = get_score(game_result=args.result)
 print(f'{player.player_name} закончил игру с результатом -  {res} очков')
 
 
-# parser = argparse.ArgumentParser(description='Bowling results ')
-# parser.add_argument('bowling_additional', type=str)
-# args = parser.parse_args()
-# print(args.bowling_additional)
-
-
-
-
 # При написании кода помнить, что заказчик может захотеть доработок и новых возможностей...
 # И, возможно, вам пригодится паттерн проектирования "Состояние",
 #   см https://clck.ru/Fudd8 и https://refactoring.guru/ru/design-patterns/state
