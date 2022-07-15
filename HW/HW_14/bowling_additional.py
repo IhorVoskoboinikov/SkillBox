@@ -62,7 +62,6 @@ def get_score(game_result):
             result += 0 if next_char == '-' else (multiplier * int(next_char))
         multiplier = 1
         i += 2
-    # print(result)
     return result
 
 
@@ -70,5 +69,4 @@ if __name__ == "__main__":
     ihor = Bowling(player_name='Ihor')
     ihor.play_game()
     result = ihor.final_result
-    # get_score(game_result=result)
-    get_score(game_result='3/1')
+    get_score(game_result=result)
