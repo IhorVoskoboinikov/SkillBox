@@ -11,7 +11,6 @@ with open('rpg.json', 'r') as file_with_data:
 
 class Game:
 
-
     def __init__(self, location_path):
         self.location_path = location_path
         self.experience = 0
@@ -65,11 +64,8 @@ class Game:
         cprint(f'{n_monster + n_location + 1} -- Выход')
         player_choose = input(colored('Сделайте ваш выбор:', color='blue'))
         try:
-            if int(player_choose) == (n_monster + n_location + 1) or self.experience >= 280:
-                cprint(f"Вы завершили игру с результатом:\n"
-                       f" - опыт = {self.experience}\n"
-                       f" - остаток времени = {self.remaining_time}", color='green')
-                self.remaining_time = 0
+            if int(player_choose) == (n_monster + n_location + 1):
+                self.locations.remove(self.locations[-1])
             elif int(player_choose) <= n_monster:
                 self.monster_attack(player_choose)
             else:
@@ -111,17 +107,18 @@ class Game:
 
 field_names = ['current_location', 'current_experience', 'current_date']
 game = Game(location_path=game_map)
-while game.remaining_time > 0:
+while (game.remaining_time > 0) and (game.experience < 280) and game.locations:
     cprint("================================", color='red')
     game.game_step()
     game.player_choose()
-# for i in game.log_data:
-#     print(i)
-#
+
+cprint("================================", color='red')
+cprint(f"Вы завершили игру с результатом:\n"
+       f" - опыт = {game.experience}\n"
+       f" - остаток времени = {game.remaining_time}", color='green')
+
 with open('dungeon.csv', 'w', newline='') as write_log_csv:
     writer = csv.writer(write_log_csv)
     writer.writerow(field_names)
     for row in game.log_data:
         writer.writerow(row)
-
-
