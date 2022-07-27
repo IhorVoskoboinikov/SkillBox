@@ -5,8 +5,6 @@ from termcolor import cprint, colored
 
 with open('rpg.json', 'r') as file_with_data:
     game_map = json.load(file_with_data)  # преобразование в словарь
-    # json_data = json.dumps(self.game_data)
-    # pprint(type(game_map))
 
 
 class Game:
@@ -65,15 +63,15 @@ class Game:
         player_choose = input(colored('Сделайте ваш выбор:', color='blue'))
         try:
             if int(player_choose) == (n_monster + n_location + 1):
-                self.locations.remove(self.locations[-1])
+                self.locations.pop(-1)
             elif int(player_choose) <= n_monster:
                 self.monster_attack(player_choose)
             else:
                 self.move_to_another_location(player_choose, n_monster)
         except IndexError:
-            self.next_location.clear()
-            self.monsters_in_location.clear()
             cprint("Не правильный ввод! Повторите попытку!", color='red')
+        self.next_location.clear()
+        self.monsters_in_location.clear()
 
     def monster_attack(self, player_choose):
         player_choose = int(player_choose)
@@ -85,8 +83,6 @@ class Game:
         self.time_in_the_game += spent_time_monster
         self.current_location.remove(monster_name)
         self.monsters_in_location.remove(monster_name)
-        self.next_location.clear()
-        self.monsters_in_location.clear()
 
     def move_to_another_location(self, player_choose, n_monster):
         self.start_game_time = datetime.datetime.now()
@@ -98,8 +94,6 @@ class Game:
         self.remaining_time -= spent_time
         self.time_in_the_game += spent_time
         self.locations.append(location_name)
-        self.next_location.clear()
-        self.monsters_in_location.clear()
         self.start_game_time = datetime.datetime.now()
         log_time = f"{self.start_game_time.strftime('%d.%m.%Y')} {self.start_game_time.strftime('%H:%M:%S')}"
         self.log_data.append([self.current_location_name, self.experience, log_time])
