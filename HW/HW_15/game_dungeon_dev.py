@@ -10,7 +10,7 @@ with open('rpg.json', 'r') as file_with_data:
 
 
 class Game:
-    log_data = []
+
 
     def __init__(self, location_path):
         self.location_path = location_path
@@ -20,6 +20,7 @@ class Game:
         self.locations = list(self.location_path.keys())
         self.current_location = None
         self.current_location_name = None
+        self.log_data = []
         self.next_location = []
         self.monsters_in_location = []
         self.time_in_the_game = 0
@@ -105,7 +106,7 @@ class Game:
         self.monsters_in_location.clear()
         self.start_game_time = datetime.datetime.now()
         log_time = f"{self.start_game_time.strftime('%d.%m.%Y')} {self.start_game_time.strftime('%H:%M:%S')}"
-        Game.log_data.append([self.current_location_name, self.experience, log_time])
+        self.log_data.append([self.current_location_name, self.experience, log_time])
 
 
 field_names = ['current_location', 'current_experience', 'current_date']
