@@ -15,23 +15,27 @@ def ai_game(game_map):
         cprint(location, color='green')
         for objects in location_object:
             if not isinstance(objects, dict):
-                print(objects)
-                exp = int(objects[(objects.find('exp') + 3):(objects.find('tm') - 1)])
-                spent_time_monster = float(objects[(objects.find('tm') + 2):])
-                remaining_time -= spent_time_monster
-                experience += exp
-                print(f'Exp - {experience}, time - {remaining_time}')
-                del objects
-                continue
+                if (remaining_time > 0) and (experience < 280):
+                    print(objects)
+                    exp = int(objects[(objects.find('exp') + 3):(objects.find('tm') - 1)])
+                    spent_time_monster = float(objects[(objects.find('tm') + 2):])
+                    remaining_time -= spent_time_monster
+                    experience += exp
+                    print(f'Exp - {experience}, time - {remaining_time}')
+                    del objects
+                    continue
+                else:
+                    print(f"Game over! EXP = {experience}, TIME = {remaining_time}")
+                    break
             location_name = ''.join(list(objects.keys()))
             print(location_name)
             spent_time = float(location_name[(location_name.find('tm') + 2):])
             remaining_time -= spent_time
             cprint(objects, color='red')
-            if (remaining_time > 0) and (experience < 280):
-                ai_game(game_map=objects)
-            else:
-                print(f"Game over! EXP = {experience}, TIME = {remaining_time}")
+            # if (remaining_time > 0) and (experience < 280):
+            ai_game(game_map=objects)
+            # else:
+            #     print(f"Game over! EXP = {experience}, TIME = {remaining_time}")
 
 
 ai_game(game_map=game_map)
