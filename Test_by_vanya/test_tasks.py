@@ -4,33 +4,27 @@ import aiohttp
 
 import config
 
+from typing import Optional, List
 
-async def parse_matrix(url: str) -> (list[int], None):
-    if not isinstance(url, str):
-        print(config.WRONG_DATA)
-        return
-    if not url.startswith('https://'):
-        print(config.WRONG_URL)
-        return
 
-    matrix = []
-
+async def parsing_data(url: str) -> (list[list[int]]):
+    check_matrix_list = []
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
             if resp.status == 200:
                 data = await resp.text()
                 for i in data.split("\n"):
                     if i.startswith("|"):
-                        matrix.append(list(map(int, i.split("|")[1:-1])))
+                        check_matrix_list.append(list(map(int, i.split("|")[1:-1])))
             else:
                 if resp.status in config.ERROR_DICT:
                     raise Warning(f"Status code - {resp.status}: Error - {config.ERROR_DICT[resp.status]}")
                 else:
                     raise Warning(f"Status code = {resp.status}, error - {resp}")
-    if not matrix:
-        print(config.NO_DATA_IN_MATRIX)
-        return
+            return check_matrix_list
 
+
+async def spiral_order(matrix: list) -> Optional[List[int]]:
     revers_matrix = []
 
     for i in matrix[::-1]:
@@ -38,31 +32,51 @@ async def parse_matrix(url: str) -> (list[int], None):
 
     check_number = len(revers_matrix[0]) * len(revers_matrix)
 
-    result = []
+    result_list = []
     index_1, index_2, index_3, index_4 = 0, len(revers_matrix[0]) - 1, len(revers_matrix) - 1, 0
 
-    while len(result) < check_number:
+    while len(result_list) < check_number:
 
         for i in revers_matrix[index_1][index_4:index_2 + 1]:
-            result.append(i)
+            result_list.append(i)
         index_1 += 1
 
         for i in revers_matrix[index_1:index_3 + 1]:
-            result.append(i[index_2])
+            result_list.append(i[index_2])
         index_2 -= 1
 
         if index_4 == 0:
             for i in revers_matrix[index_3][index_2::-1]:
-                result.append(i)
+                result_list.append(i)
             index_3 -= 1
         else:
             for i in revers_matrix[index_3][index_2:index_4 - 1:-1]:
-                result.append(i)
+                result_list.append(i)
             index_3 -= 1
 
         for i in revers_matrix[index_3:index_1 - 1:-1]:
-            result.append(i[index_4])
+            result_list.append(i[index_4])
         index_4 += 1
+
+    return result_list
+
+
+async def parse_matrix(url: str) -> Optional[List[int]]:
+    if not isinstance(url, str):
+        print(config.WRONG_DATA)
+        return
+    if not url.startswith('https://'):
+        print(config.WRONG_URL)
+        return
+
+    matrix = await parsing_data(url=url)
+
+    if not matrix:
+        print(config.NO_DATA_IN_MATRIX)
+        return
+
+    result = await spiral_order(matrix=matrix)
+
     if result == config.EXPECTED:
         print("Результат верный!")
     return result
