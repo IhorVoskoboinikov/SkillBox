@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import asyncio
+from typing import Optional, List
+
 import aiohttp
 
 import config
 
-from typing import Optional, List
 
-
-async def parsing_data(url: str) -> (list[list[int]]):
+async def parsing_data(url: str) -> Optional[List[List[int]]]:
     check_matrix_list = []
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
@@ -18,13 +18,13 @@ async def parsing_data(url: str) -> (list[list[int]]):
                         check_matrix_list.append(list(map(int, i.split("|")[1:-1])))
             else:
                 if resp.status in config.ERROR_DICT:
-                    raise Warning(f"Status code - {resp.status}: Error - {config.ERROR_DICT[resp.status]}")
+                    raise Warning(f"Status code - {resp.status}: error - {config.ERROR_DICT[resp.status]}")
                 else:
-                    raise Warning(f"Status code = {resp.status}, error - {resp}")
+                    raise Warning(f"Status code = {resp.status}: error - {resp}")
             return check_matrix_list
 
 
-async def spiral_order(matrix: list) -> Optional[List[int]]:
+def spiral_order(matrix: List[List[int]]) -> List[int]:
     revers_matrix = []
 
     for i in matrix[::-1]:
@@ -75,10 +75,10 @@ async def parse_matrix(url: str) -> Optional[List[int]]:
         print(config.NO_DATA_IN_MATRIX)
         return
 
-    result = await spiral_order(matrix=matrix)
+    result = spiral_order(matrix=matrix)
 
     if result == config.EXPECTED:
-        print("Результат верный!")
+        print("The result is correct!")
     return result
 
 
