@@ -1,17 +1,8 @@
 # -*- coding: utf-8 -*-
 
-
 SOURCE_URL = 'https://raw.githubusercontent.com/koury/pymx/main/source.txt'
-WRONG_DATA = "Wrong data type, not a string"
-WRONG_URL = "Wrong url! Request must start with 'https://'"
-NO_DATA_IN_MATRIX = "No data in matrix!"
-
-EXPECTED = [
-    160, 150, 140, 130,
-    90, 50, 10, 20,
-    30, 40, 80, 120,
-    110, 100, 60, 70,
-]
+WRONG_URL = "Wrong url! Request must start with 'https://' and be string!"
+WRONG_DATA_IN_MATRIX = "No data in matrix or matrix is not square or wrong matrix!"
 
 ERROR_DICT = {
     206: "Partial Content",
@@ -27,3 +18,5 @@ ERROR_DICT = {
     522: "Connection Timed Out",
     524: "A Timeout Occurred",
 }
+
+STATUS_OK = 200
