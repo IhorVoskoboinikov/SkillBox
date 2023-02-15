@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-SOURCE_URL = 'https://raw.githubusercontent.com/koury/pymx/main/source.txt'
 WRONG_URL = "Wrong url! Request must start with 'https://' and be string!"
 WRONG_DATA_IN_MATRIX = "No data in matrix or matrix is not square or wrong matrix!"
 
