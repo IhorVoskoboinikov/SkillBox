@@ -5,6 +5,7 @@ from typing import Optional, List
 import aiohttp
 
 import config
+import tests
 
 
 async def get_parsed_data(url: str) -> Optional[List[List[int]]]:
@@ -102,4 +103,4 @@ async def parse_matrix(url: str) -> Optional[List[int]]:
 
 
 if __name__ == "__main__":
-    asyncio.run(parse_matrix(url=config.SOURCE_URL))
+    asyncio.run(parse_matrix(url=tests.SOURCE_URL))
