@@ -15,16 +15,13 @@ async def get_parsed_data(url: str) -> Optional[List[List[int]]]:
     check_matrix_list = []
 
     async with aiohttp.ClientSession() as session:
-
         async with session.get(url) as resp:
-
             if resp.status == config.STATUS_OK:
                 data = await resp.text()
 
                 for i in data.split("\n"):
                     if i.startswith("|"):
                         check_matrix_list.append(list(map(int, i.split("|")[1:-1])))
-
             else:
                 raise Warning(f"Status code - {resp.status}: error - {config.ERROR_DICT.get(resp.status, resp)}")
 
@@ -32,14 +29,14 @@ async def get_parsed_data(url: str) -> Optional[List[List[int]]]:
 
 
 def get_spiral_order(matrix: List[List[int]]) -> Optional[List[int]]:
-
     if not matrix or len(matrix[0]) != len(matrix):
         return None
 
-    check_number = len(matrix[0]) * len(matrix)
+    for i in matrix:
+        if len(i) != len(matrix):
+            return None
 
-    if check_number % check_number != 0:
-        return None
+    check_number = len(matrix[0]) * len(matrix)
 
     revers_matrix = []
 
@@ -86,9 +83,7 @@ def get_spiral_order(matrix: List[List[int]]) -> Optional[List[int]]:
 
 
 async def parse_matrix(url: str) -> Optional[List[int]]:
-
     matrix = await get_parsed_data(url=url)
-
     if matrix is None:
         print(config.WRONG_URL)
         return None
