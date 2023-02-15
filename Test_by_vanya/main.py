@@ -8,12 +8,7 @@ import config
 
 
 async def get_parsed_data(url: str) -> Optional[List[List[int]]]:
-    if not isinstance(url, str):
-        print(config.WRONG_DATA)
-        return None
-
-    if not url.startswith('https://'):
-        print(config.WRONG_URL)
+    if not isinstance(url, str) or not url.startswith('https://'):
         return None
 
     check_matrix_list = []
@@ -35,13 +30,20 @@ async def get_parsed_data(url: str) -> Optional[List[List[int]]]:
     return check_matrix_list
 
 
-def get_spiral_order(matrix: List[List[int]]) -> List[int]:
+def get_spiral_order(matrix: List[List[int]]) -> Optional[List[int]]:
+
+    if not matrix or len(matrix[0]) != len(matrix):
+        return None
+
+    check_number = len(matrix[0]) * len(matrix)
+
+    if check_number % check_number != 0:
+        return None
+
     revers_matrix = []
 
     for i in matrix[::-1]:
         revers_matrix.append(i[::-1])
-
-    check_number = len(revers_matrix[0]) * len(revers_matrix)
 
     index_1 = 0
     index_2 = len(revers_matrix[0]) - 1
@@ -51,14 +53,19 @@ def get_spiral_order(matrix: List[List[int]]) -> List[int]:
     result_list = []
 
     while len(result_list) < check_number:
+        # line 1
         for i in revers_matrix[index_1][index_4:index_2 + 1]:
             result_list.append(i)
         index_1 += 1
-
+        if len(result_list) >= check_number:
+            break
+        # line 2
         for i in revers_matrix[index_1:index_3 + 1]:
             result_list.append(i[index_2])
         index_2 -= 1
-
+        if len(result_list) >= check_number:
+            break
+        # line 3
         if index_4 == 0:
             for i in revers_matrix[index_3][index_2::-1]:
                 result_list.append(i)
@@ -67,7 +74,9 @@ def get_spiral_order(matrix: List[List[int]]) -> List[int]:
             for i in revers_matrix[index_3][index_2:index_4 - 1:-1]:
                 result_list.append(i)
             index_3 -= 1
-
+        if len(result_list) >= check_number:
+            break
+        # # line 4
         for i in revers_matrix[index_3:index_1 - 1:-1]:
             result_list.append(i[index_4])
         index_4 += 1
@@ -80,14 +89,14 @@ async def parse_matrix(url: str) -> Optional[List[int]]:
     matrix = await get_parsed_data(url=url)
 
     if matrix is None:
-        print(config.NO_DATA_IN_MATRIX)
-        return None
-
-    if len(matrix[0]) != len(matrix):
-        print(config.WRONG_MATRIX)
+        print(config.WRONG_URL)
         return None
 
     result = get_spiral_order(matrix=matrix)
+
+    if result is None:
+        print(config.WRONG_DATA_IN_MATRIX)
+        return None
 
     return result
 
