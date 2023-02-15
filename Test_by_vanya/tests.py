@@ -6,6 +6,7 @@ import config
 
 from main import parse_matrix, get_parsed_data, get_spiral_order
 
+SOURCE_URL = 'https://raw.githubusercontent.com/koury/pymx/main/source.txt'
 EXPECTED = [
     160, 150, 140, 130,
     90, 50, 10, 20,
@@ -17,7 +18,7 @@ EXPECTED = [
 class MyParseMatrix(unittest.TestCase):
 
     def test_base_run_parse_matrix(self):
-        result = asyncio.run(parse_matrix(url=config.SOURCE_URL))
+        result = asyncio.run(parse_matrix(url=SOURCE_URL))
         self.assertEqual(result, EXPECTED)
 
     def test_wrong_type_in_get_parsed_data(self):
